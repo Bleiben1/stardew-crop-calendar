@@ -1,6 +1,6 @@
 const routes = require("./routes")
 
-const express = requiere('express')
+const express = require('express')
 
 const app = express()
 const port = 3001
