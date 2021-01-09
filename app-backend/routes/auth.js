@@ -1,15 +1,13 @@
 const express = require('express')
 const router = express.Router()
+const passport = require('passport')
 
 const db  = require('../db')
 
 module.exports = router
 
-const passport = require('../auth')
-
 router.get('/steam', 
     passport.authenticate('steam', {failureRedirect: '/'}), function(req, res) {
-        console.log("req.user => ", req.user)
         res.redirect('/')
     }
 )
