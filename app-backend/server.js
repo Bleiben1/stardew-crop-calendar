@@ -3,9 +3,9 @@ const routes = require("./routes")
 const express = require('express')
 const passport = require('passport')
 const util = require('util')
-
+const session = require('express-session')
 const SteamStrategy = require('passport-steam').Strategy
-const authRoutes = require('./routes/auth')
+//const authRoutes = require('./routes/auth')
 
 const app = express()
 const port = 3001
@@ -14,12 +14,12 @@ passport.serializeUser(function(user, done) {
     const userID = user.id,
         userDisplayName = user.displayName,
         userPhoto = user.photos[0].value
-    console.log('user before serialize = ', {userID, userDisplayName, userPhoto})
     done(null, {userID, userDisplayName, userPhoto})
 })
 
-passport.deserializeUser(function(obj, done) {
+passport.deserializeUser(function({userID, userDisplayName, userPhoto}, done) {
     try{
+        console.log('user inside deserialize = ', {userID, userDisplayName, userPhoto})
         done(null, {userID, userDisplayName, userPhoto})
     }catch(err){
         done(err, null)
@@ -39,11 +39,11 @@ passport.use(new SteamStrategy({
   }
 ))
 
-/*app.use(session({
+app.use(session({
     secret: 'your secret',
     name: 'name of session id',
     resave: true,
-    saveUninitialized: true}))*/
+    saveUninitialized: true}))
 
 app.use(passport.initialize())
 app.use(passport.session())
@@ -54,7 +54,7 @@ app.get('/', function(req, res){
 })
   
 app.get('/account', ensureAuthenticated, function(req, res){
-    console.log('req en /account =>', req.user)
+    console.log('req en /account =>', {userID, userDisplayName, userPhoto})
     res.status(300).send('estoy en /account')
 })
   
