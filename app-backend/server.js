@@ -5,7 +5,8 @@ const passport = require('passport')
 const util = require('util')
 const session = require('express-session')
 const SteamStrategy = require('passport-steam').Strategy
-//const authRoutes = require('./routes/auth')
+const { profile } = require("console")
+const db = require('./db')
 
 const app = express()
 const port = 3001
@@ -31,19 +32,36 @@ passport.use(new SteamStrategy({
     realm: 'http://localhost:3001/',
     apiKey: process.env.STEAM_API_KEY
   },
-  function(identifier, profile, done) {
+  /*function(identifier, profile, done) {
     process.nextTick(function () {
       profile.identifier = identifier
       return done(null, profile)
     })
+  }*/
+  async function(identifier, profile, done) {
+      console.log("checking if user is already in database or newone")
+      const user = await db('user').where({userID: profile.id}).first()
+      console.log("user => ", user)
+      if (!user) {
+          console.log("new user in database!!")
+        const userID = profile.id,
+        userDisplayName = profile.displayName,
+        userPhoto = profile.photos[0].value
+        await db('user').insert({userID: userID, 
+                                userDisplayName: userDisplayName,
+                                haveAgriculturist: false, 
+                                userPhoto: userPhoto}
+                            ).returning('*')
+      }
+      return done(null, profile)
   }
 ))
 
 app.use(session({
-    secret: 'your secret',
-    name: 'name of session id',
+    secret: process.env.SESSION_SECRET,
+    name: 'StardewCropCalendar session id',
     resave: true,
-    saveUninitialized: true}))
+    saveUninitialized: false}))
 
 app.use(passport.initialize())
 app.use(passport.session())
@@ -54,7 +72,7 @@ app.get('/', function(req, res){
 })
   
 app.get('/account', ensureAuthenticated, function(req, res){
-    console.log('req en /account =>', {userID, userDisplayName, userPhoto})
+    console.log('req en /account =>', req.user)
     res.status(300).send('estoy en /account')
 })
   
