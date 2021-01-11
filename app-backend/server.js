@@ -2,7 +2,6 @@ const routes = require("./routes")
 
 const express = require('express')
 const passport = require('passport')
-const util = require('util')
 const session = require('express-session')
 const SteamStrategy = require('passport-steam').Strategy
 const { profile } = require("console")
@@ -12,16 +11,21 @@ const app = express()
 const port = 3001
 
 passport.serializeUser(function(user, done) {
-    const userID = user.id,
-        userDisplayName = user.displayName,
-        userPhoto = user.photos[0].value
-    done(null, {userID, userDisplayName, userPhoto})
+    const userID = user.userID,
+        userDisplayName = user.userDisplayName,
+        haveAgriculturist = user.haveAgriculturist,
+        userPhoto = user.userPhoto
+    done(null, {userID, userDisplayName, haveAgriculturist, userPhoto})
 })
 
-passport.deserializeUser(function({userID, userDisplayName, userPhoto}, done) {
+passport.deserializeUser(function(user, done) {
     try{
-        console.log('user inside deserialize = ', {userID, userDisplayName, userPhoto})
-        done(null, {userID, userDisplayName, userPhoto})
+        const userID = user.userID,
+        userDisplayName = user.userDisplayName,
+        haveAgriculturist = user.haveAgriculturist,
+        userPhoto = user.userPhoto
+        console.log('user inside deserialize => ', user)
+        done(null, {userID, userDisplayName, haveAgriculturist, userPhoto})
     }catch(err){
         done(err, null)
     }
@@ -32,16 +36,10 @@ passport.use(new SteamStrategy({
     realm: 'http://localhost:3001/',
     apiKey: process.env.STEAM_API_KEY
   },
-  /*function(identifier, profile, done) {
-    process.nextTick(function () {
-      profile.identifier = identifier
-      return done(null, profile)
-    })
-  }*/
   async function(identifier, profile, done) {
       console.log("checking if user is already in database or newone")
       const user = await db('user').where({userID: profile.id}).first()
-      console.log("user => ", user)
+      console.log("user in db => ", user)
       if (!user) {
           console.log("new user in database!!")
         const userID = profile.id,
@@ -49,11 +47,11 @@ passport.use(new SteamStrategy({
         userPhoto = profile.photos[0].value
         await db('user').insert({userID: userID, 
                                 userDisplayName: userDisplayName,
-                                haveAgriculturist: false, 
                                 userPhoto: userPhoto}
                             ).returning('*')
       }
-      return done(null, profile)
+      //return done(null, profile)
+      return done(null, user)
   }
 ))
 
@@ -67,17 +65,14 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.get('/', function(req, res){
-    console.log('req en / =>', req.user)
     res.status(300).send('estoy en /')
 })
   
 app.get('/account', ensureAuthenticated, function(req, res){
-    console.log('req en /account =>', req.user)
     res.status(300).send('estoy en /account')
 })
   
 app.get('/logout', function(req, res){
-    console.log('entering /logout')
     req.logout()
     res.redirect('/')
 })
