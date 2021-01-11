@@ -39,18 +39,15 @@ passport.use(new SteamStrategy({
   async function(identifier, profile, done) {
       console.log("checking if user is already in database or newone")
       const user = await db('user').where({userID: profile.id}).first()
-      console.log("user in db => ", user)
       if (!user) {
-          console.log("new user in database!!")
         const userID = profile.id,
         userDisplayName = profile.displayName,
         userPhoto = profile.photos[0].value
-        await db('user').insert({userID: userID, 
+        user = await db('user').insert({userID: userID, 
                                 userDisplayName: userDisplayName,
                                 userPhoto: userPhoto}
                             ).returning('*')
       }
-      //return done(null, profile)
       return done(null, user)
   }
 ))

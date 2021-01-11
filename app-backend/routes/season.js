@@ -5,15 +5,15 @@ const db  = require('../db')
 
 module.exports = router
 
-//get the complete list of crops available
+//get the complete list of seasons
 router.get('/', async (req, res) => {
-    const results = await db.select().table('crop')
+    const results = await db.select().table('season')
     res.send(results)
 })
 
-//get the data of a crop defined by it ID
+//get the data of a season defined by it ID
 router.get('/:id', async (req, res) => {
     const {id} = req.params
-    const results = await db('crop').where({cropID: id})
+    const results = await db('season').where({seasonID: id})
     res.send(results)
 })
