@@ -5,6 +5,7 @@ const router = express.Router()
 const crop = require('./crop')
 const auth = require('./auth')
 const season = require('./season')
+const cropSeason = require('./cropSeason')
 
 module.exports = router
 
@@ -12,3 +13,4 @@ module.exports = router
 router.use('/crop', crop)
 router.use('/auth', auth)
 router.use('/season', season)
+router.use('/cropSeason', cropSeason)
