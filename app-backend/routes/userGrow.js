@@ -10,6 +10,7 @@ module.exports = router
 router.post('/:id', async (req, res) => {
     const {id} = req.params
     const results = await db('user-grow').where({FK_userID: id})
+    console.log('results => ', results)
     res.send(results)
 })
 
@@ -22,3 +23,4 @@ router.post('/perSeason/:user/:season', async (req, res) => {
     console.log('results => ', results)
     res.send(results)
 })
+
