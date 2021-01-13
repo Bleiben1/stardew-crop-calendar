@@ -3,6 +3,7 @@ const router = express.Router()
 
 const db  = require('../db')
 
+
 module.exports = router
 
 //get the complete list of crops planted by a user
@@ -12,8 +13,12 @@ router.post('/:id', async (req, res) => {
     res.send(results)
 })
 
-router.post('/perSeason', async (req, res) => {
-    const {userID, seasonID} = req.body
-    const results = await db('user-grow').where({FK_userID: id})
+//get list of crops planted by a user during a specific season
+router.post('/perSeason/:user/:season', async (req, res) => {
+    const {user, season} = req.params
+    const results = await db('user-grow')
+    .where({FK_userID: user,
+    FK_seasonID: season})
+    console.log('results => ', results)
     res.send(results)
 })

@@ -6,6 +6,7 @@ const crop = require('./crop')
 const auth = require('./auth')
 const season = require('./season')
 const cropSeason = require('./cropSeason')
+const userGrow = require('./userGrow')
 
 module.exports = router
 
@@ -14,3 +15,4 @@ router.use('/crop', crop)
 router.use('/auth', auth)
 router.use('/season', season)
 router.use('/cropSeason', cropSeason)
+router.use('/userGrow', userGrow)
