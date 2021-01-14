@@ -25,8 +25,26 @@ router.post('/perSeason/:user/:season', async (req, res) => {
 })
 
 //save the data of a newly planted crop*/
-router.post('/saveUserGrow', (req, res) => {
-    const {test1, test22} = req.body
-    console.log('req.body => ', req.body)
-    res.status(300).send({test1, test22})
+router.post('/saveUserGrow', async (req, res) => {
+    const   {
+                userID, 
+                cropID,
+                haveSpeedGro,
+                haveDeluxeSpeedGro,
+                dayOfSeason,
+                isHarvest,
+                seasonID
+            } = req.body
+    const results = await db('user-grow').insert(
+        {
+            FK_userID: userID, 
+            FK_cropID: cropID,
+            haveSpeedGro: haveSpeedGro,
+            haveDeluxeSpeedGro: haveDeluxeSpeedGro,
+            dayOfSeason: dayOfSeason,
+            isHarvest: isHarvest,
+            FK_seasonID: seasonID
+        }
+    ).returning('*')
+    res.status(300).send(results)
 })
