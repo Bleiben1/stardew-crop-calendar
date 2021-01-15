@@ -61,3 +61,17 @@ router.put('/updateUserGrow', async (req, res) => {
         .returning('*')
     res.status(300).send(results)
 })
+
+router.delete('/deleteUserGrow', async (req, res) => {
+    const { userGrowID } = req.body
+    const results = await db('user-grow')
+        .where({ userGrowID })
+        .del()
+        .returning('*')
+    res.status(300).send(results)
+})
+
+router.get('/testAuth', (req, res) => {
+    console.log("req.isAutenticated() => ", req.isAuthenticated())
+    res.status(300).send("results")
+})
