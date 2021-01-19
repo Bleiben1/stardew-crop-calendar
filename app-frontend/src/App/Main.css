@@ -1,0 +1,6 @@
+.container {
+    background-image: url('../imgs/stardew_background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+}
