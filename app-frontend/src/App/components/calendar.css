@@ -1,0 +1,8 @@
+.calendar {
+    border: 10px solid transparent;
+    padding: 10px;
+    border-image: url('../../imgs/menu_border_noshadowtopleft.png') 10 stretch;
+    background-color: #FBEBC2;
+    border-radius: 10%;
+}
+
