@@ -1,10 +1,26 @@
 import './calendar.css'
 import arrow_left from '../../imgs/arrow_left.png'
 import arrow_right from '../../imgs/arrow_right.png'
+import potato_img from '../../imgs/crops/potato.png'
+import parsnip_img from '../../imgs/crops/parsnip.png'
 import CalendarDay from './calendar_day.js'
 
 var seasons = ["Spring", "Summer", "Fall", "Winter"]
 var current_season = 0
+
+var days = [
+    {day: 1, data: [
+                {
+                    name: ["potato_img"], 
+                    image: [potato_img]
+                },
+                {
+                    name: ["parsnip_img"], 
+                    image: [parsnip_img]
+                }
+            ]
+    }
+]
 
 function Main() {
     return (
@@ -28,9 +44,7 @@ function Main() {
                 </tr>
                 <tr>
                     <th className="solid_boder">
-                        <ul>
-                            <li><p>1</p></li>
-                        </ul>
+                        <CalendarDay data={days[0]}/>
                     </th>
                     <th className="solid_boder">
                         <ul>
@@ -174,42 +188,6 @@ function Main() {
                         </ul>
                     </th>
                 </tr>
-                {/*<tr>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                </tr>
-                <tr>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                </tr>
-                <tr>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                </tr>
-                <tr>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                    <td><CalendarDay /></td>
-                </tr>*/}
             </table> 
         </div>
     )
