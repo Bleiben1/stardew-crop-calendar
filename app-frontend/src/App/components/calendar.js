@@ -2,7 +2,6 @@ import './calendar.css'
 import arrow_left from '../../imgs/arrow_left.png'
 import arrow_right from '../../imgs/arrow_right.png'
 import potato_img from '../../imgs/crops/potato.png'
-import parsnip_img from '../../imgs/crops/parsnip.png'
 import CalendarDay from './calendar_day.js'
 
 var seasons = ["Spring", "Summer", "Fall", "Winter"]
@@ -16,7 +15,7 @@ var days = [
                 },
                 {
                     name: ["parsnip_img"], 
-                    image: [parsnip_img]
+                    image: ["https://bleiben1.github.io/stardew_crops/parsnip.png"]
                 }
             ]
     }
@@ -44,7 +43,7 @@ function Main() {
                 </tr>
                 <tr>
                     <th className="solid_boder">
-                        <CalendarDay data={days[0]}/>
+                        <CalendarDay day={1} info={days[0]}/>
                     </th>
                     <th className="solid_boder">
                         <ul>

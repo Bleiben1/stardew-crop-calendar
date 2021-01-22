@@ -5,8 +5,8 @@ import './calendar_day.css'
 function Main(props) {
     return (
         <ul>
-            <CalendarElement day={props.data.day}/>
-            {props.data.data.map(c => <CalendarElement name={c.name} image={c.image} />)}
+            <CalendarElement day={props.day}/>
+            {props.info.data.map(c => <CalendarElement name={c.name} image={c.image} />)}
         </ul>
     )
 }

@@ -10,6 +10,10 @@
     margin : 0px 32px;
 }
 
+.prev_next_button:hover {
+    cursor: pointer;
+}
+
 ul, li, li > p {
     list-style: none;
     padding: 0px;
@@ -34,4 +38,5 @@ table, th, td {
 .noBorder {
     border: hidden;
     border-bottom: black;
+    padding: 0px 0px 8px;
 }
