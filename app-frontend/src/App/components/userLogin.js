@@ -13,7 +13,22 @@ export default class UserLoginSection extends Component {
     
 
     componentDidMount = async () => {
+        const response =
+        await fetch("/user/isLogedIn",
+            { 
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'}
+            }
+        )
+        console.log(await response)
+    }
 
+    async checkUserLoginStatus(){
+        const response =
+          await fetch("/account",
+            { headers: {'Content-Type': 'application/json'}}
+          )
+        console.log(await response.json())
     }
 
     render() {
