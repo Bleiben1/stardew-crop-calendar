@@ -13,11 +13,3 @@ router.put('/updateHaveAgriculturist', async (req, res) => {
         .returning('*')
     res.status(300).send(results)
 })
-
-router.post('/isLogedIn', (req, res) => {
-    if (req.isAuthenticated()) {
-        res.status(200).send("OK")
-    } else {
-        res.status(401).send("Unauthorized")
-    }
-})

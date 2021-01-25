@@ -6,13 +6,14 @@ export default class UserLoginSection extends Component {
     constructor() {
         super()
         this.state = {
-            isUserLogin: false
+            authenticated: false,
+            user: "empty"
         }
         
     }
     
 
-    componentDidMount = async () => {
+    /*componentDidMount = async () => {
         const response =
         await fetch("/user/isLogedIn",
             { 
@@ -20,30 +21,74 @@ export default class UserLoginSection extends Component {
                 headers: {'Content-Type': 'application/json'}
             }
         )
-        console.log(await response)
-    }
+        console.log(response)
+        if (response.status === 200) {
+            this.setState({
+                isUserLogin: true
+            })
+        }
+    }*/
 
-    async checkUserLoginStatus(){
-        const response =
-          await fetch("/account",
-            { headers: {'Content-Type': 'application/json'}}
-          )
-        console.log(await response.json())
+    componentDidMount() {
+        fetch("http://localhost:3001/auth/success", {
+            method: "GET",
+            credentials: "include",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Credentials": true
+            }
+        })
+        .then(response => {
+            if (response.status === 200) return response.json()
+            throw new Error("failed to authenticate user")
+          })
+        .then(responseJson => {
+            this.setState({
+            authenticated: true,
+            user: responseJson.user
+            })
+        })
+        .catch(error => {
+            this.setState({
+                authenticated: false,
+                error: "Failed to authenticate user"
+            })
+        })
     }
 
     render() {
+        const { authenticated } = this.state
         return (
             <div className="userLoginSection">
-            {
-                this.state.isUserLogin ? (
-                    <img src={loginButtonImg} alt="alreadyLoggedIn" className="prev_next_button" ></img>
-                ) : (
-                    //<img src={loginButtonImg} alt="login with Steam Account" className="prev_next_button" onClick={() => imageClick()}></img>
-                    <img src={loginButtonImg} alt="login with Steam Account" className="prev_next_button" ></img>
-                )
-            }
+                <ul>
+                    {
+                        authenticated ? (
+                            <li onClick={this._handleLogoutClick}>Logout</li>
+                        ) : (
+                            <li onClick={this._handleSignInClick}>Login</li>
+                        )
+                    }
+                </ul>
             </div>
         )
     }
+
+     _handleSignInClick = () => {
+        // Authenticate using via passport api in the backend
+        // Open Steam login page
+        window.open("http://localhost:3001/auth/steam", "_self");
+    };
+
+    _handleLogoutClick = () => {
+        // Logout using Steam passport api
+        // Set authenticated state to false in the HomePage component
+        window.open("http://localhost:3001/auth/logout", "_self");
+        this.handleNotAuthenticated();
+    };
+
+    _handleNotAuthenticated = () => {
+        this.setState({ authenticated: false });
+    };
 
 }

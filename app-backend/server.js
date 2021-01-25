@@ -34,7 +34,7 @@ passport.deserializeUser(function(user, done) {
 })
 
 passport.use(new SteamStrategy({
-    returnURL: 'http://localhost:3001/auth/steam/return',
+    returnURL: 'http://localhost:3001/auth/steam/redirect',
     realm: 'http://localhost:3001/',
     apiKey: process.env.STEAM_API_KEY
   },
@@ -63,8 +63,13 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.get('/', function(req, res){
-    res.status(300).send('estoy en /')
+app.get('/', ensureAuthenticated, function(req, res){
+    res.status(200).json({
+        authenticated: true,
+        message: "user successfully authenticated",
+        user: req.user,
+        cookies: req.cookies
+    })
 })
   
 app.get('/account', ensureAuthenticated, function(req, res){
@@ -84,5 +89,8 @@ app.listen(port, () => {
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) { return next(); }
-    res.redirect('/');
+    res.status(401).json({
+        authenticated: false,
+        message: "user has not been authenticated"
+    })
   }
