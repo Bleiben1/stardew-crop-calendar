@@ -18,10 +18,40 @@
     color: white;
   }
 
-  #userDropDown {
-      visibility: hidden;
+  .dropbtn {
+    background-color: black;
+    color: white;
+    padding: 8px;
+    font-size: 16px;
+    border: none;
   }
-
-  #dropDownMenu :hover #userDropDown  {
-      visibility: visible;
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
   }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content p {
+    color: black;
+    padding: 12px 16px;
+    display: block;
+  }
+  
+  .dropdown-content p:hover {background-color: #ddd;}
+  
+  .dropdown-container:hover .dropdown-content {display: block;}
+  
+  .dropdown-container:hover .dropbtn {background-color: gray;}
+  
+  .dropdown img {position: relative; float:right; margin-top: 8px;}
+  
+  .dropdown-container {float:left;}
