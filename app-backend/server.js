@@ -6,6 +6,7 @@ const session = require('express-session')
 const SteamStrategy = require('passport-steam').Strategy
 const { profile } = require("console")
 const db = require('./db')
+const cors = require('cors')
 
 const app = express()
 const port = 3001
@@ -34,7 +35,7 @@ passport.deserializeUser(function(user, done) {
 })
 
 passport.use(new SteamStrategy({
-    returnURL: 'http://localhost:3001/auth/steam/return',
+    returnURL: 'http://localhost:3001/auth/steam/redirect',
     realm: 'http://localhost:3001/',
     apiKey: process.env.STEAM_API_KEY
   },
@@ -63,8 +64,22 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.get('/', function(req, res){
-    res.status(300).send('estoy en /')
+// set up cors to allow us to accept requests from our client
+app.use(
+    cors({
+      origin: "http://localhost:3000", // allow to server to accept request from different origin
+      methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+      credentials: true // allow session cookie from browser to pass through
+    })
+)
+
+app.get('/', ensureAuthenticated, function(req, res){
+    res.status(200).json({
+        authenticated: true,
+        message: "user successfully authenticated",
+        user: req.user,
+        cookies: req.cookies
+    })
 })
   
 app.get('/account', ensureAuthenticated, function(req, res){
@@ -84,5 +99,8 @@ app.listen(port, () => {
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) { return next(); }
-    res.redirect('/');
+    res.status(401).json({
+        authenticated: false,
+        message: "user has not been authenticated"
+    })
   }

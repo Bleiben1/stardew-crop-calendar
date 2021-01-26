@@ -1,0 +1,15 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.grid-item {
+    text-align: center;
+}
+
+.day-date {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    text-align: initial;
+}

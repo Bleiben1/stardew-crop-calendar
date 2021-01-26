@@ -1,0 +1,42 @@
+.calendar {
+    border: 10px solid transparent;
+    padding: 10px;
+    border-image: url('../../imgs/menu_border_noshadowtopleft.png') 10 stretch;
+    background-color: #FBEBC2;
+    border-radius: 5%;
+}
+
+.prev_next_button {
+    margin : 0px 32px;
+}
+
+.prev_next_button:hover {
+    cursor: pointer;
+}
+
+ul, li, li > p {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    text-align: initial;
+}
+
+.solid_boder > ul {
+    width: 80px;
+    height: 80px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.noRightBorder {
+    border-right-style: hidden;
+}
+
+.noBorder {
+    border: hidden;
+    border-bottom: black;
+    padding: 0px 0px 8px;
+}
