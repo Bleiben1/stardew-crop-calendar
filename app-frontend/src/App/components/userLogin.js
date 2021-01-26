@@ -59,14 +59,25 @@ export default class UserLoginSection extends Component {
 
     render() {
         const { authenticated } = this.state
+        const { userDisplayName } = this.state.user
         return (
             <div className="userLoginSection">
-                <ul>
+                <ul className="menu">
                     {
                         authenticated ? (
-                            <li onClick={this._handleLogoutClick}>Logout</li>
+                            <li >
+                                <div id="dropDownMenu">
+                                    <span id="userIDdropDown" className="pulldownMenu">Welcome {userDisplayName}</span>
+                                    <div id="userDropDown">
+                                        <p className="popupMenuItem">Profile</p>
+                                        <p className="popupMenuItem" onClick={this._handleLogoutClick}>Logout</p>
+                                    </div>
+                                </div>
+                            </li>
                         ) : (
-                            <li onClick={this._handleSignInClick}>Login</li>
+                            <li onClick={this._handleSignInClick}>
+                                <img src={loginButtonImg} alt="login with Steam"></img>
+                            </li>
                         )
                     }
                 </ul>

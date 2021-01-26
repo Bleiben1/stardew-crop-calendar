@@ -4,3 +4,24 @@
     position: absolute;
     text-align: end;
 }
+
+.menu {
+    display: flex;
+    list-style-type: none;
+    justify-content: flex-end;
+  }
+  
+  .menu li {
+    margin: 0 10px;
+    cursor: pointer;
+    text-decoration: underline;
+    color: white;
+  }
+
+  #userDropDown {
+      visibility: hidden;
+  }
+
+  #dropDownMenu :hover #userDropDown  {
+      visibility: visible;
+  }
