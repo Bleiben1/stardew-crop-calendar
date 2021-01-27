@@ -5,9 +5,6 @@ import potato_img from '../../imgs/crops/potato.png'
 import CalendarDay from './calendar_day.js'
 import React, {Component} from 'react'
 
-var seasons = ["Spring", "Summer", "Fall", "Winter"]
-var current_season = 0
-
 var days = [
     {day: 1, data: [
                 {
@@ -26,16 +23,23 @@ export default class Calendar extends Component {
     constructor() {
         super()
         this.state = {
-             data: "not defined yet"
+            current_season: 0,
+            seasons: [{id: 0, seasonName:"Spring"}]
         }
     }
 
-    componentDidMount = async () => {
+    _getSeasonsList = async () => {
         const response =
-        await fetch("/cropSeason/getCropPerSeason/"+(current_season+1),
+        await fetch("/season",
             { headers: {'Content-Type': 'application/json'}}
         )
-        console.log(await response.json())
+        this.setState({
+            seasons: await response.json()
+        })
+    }
+
+    componentDidMount() {
+        this._getSeasonsList()
     }
 
     render(){
@@ -44,9 +48,12 @@ export default class Calendar extends Component {
                 <table>
                     <tr>
                         <th className="noBorder" colSpan="7">
-                            <img src={arrow_left} alt="prev_season" className="prev_next_button" ></img>
-                            {seasons[current_season]}
-                            <img src={arrow_right} alt="next_season" className="prev_next_button"></img>
+                            <img src={arrow_left} alt="prev_season" className="prev_next_button" 
+                            onClick={() => {
+                                this.setState({current_season: this.state.current_season - 1})}} ></img>
+                            { this.state.seasons[this.state.current_season].seasonName }
+                            <img src={arrow_right} alt="next_season" className="prev_next_button"
+                            onClick={() => this.setState({current_season: this.state.current_season + 1})} ></img>
                         </th>
                     </tr>
                     <tr>
@@ -63,9 +70,7 @@ export default class Calendar extends Component {
                             <CalendarDay day={1} info={days[0]}/>
                         </th>
                         <th className="solid_boder">
-                            <ul>
-                                <li><p>2</p></li>
-                            </ul>
+                            <CalendarDay day={2} info={days[0]}/>
                         </th>
                         <th className="solid_boder">
                             <ul>
