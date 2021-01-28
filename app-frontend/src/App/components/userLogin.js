@@ -60,13 +60,6 @@ export default class UserLoginSection extends Component {
                                     </div>
                                     <img src={userPhoto} alt="user profile" />
                                 </div>
-                                {/*<div id="dropDownMenu">
-                                    <span id="userIDdropDown" className="pulldownMenu">Welcome {userDisplayName}</span>
-                                    <div id="userDropDown">
-                                        <p className="popupMenuItem">Profile</p>
-                                        <p className="popupMenuItem" onClick={this._handleLogoutClick}>Logout</p>
-                                    </div>
-                                </div>*/}
                             </li>
                         ) : (
                             <li onClick={this._handleSignInClick}>

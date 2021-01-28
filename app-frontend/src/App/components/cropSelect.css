@@ -1,0 +1,7 @@
+.cropSelect {
+    position: absolute;
+    width: 200px;
+    left: 50%;
+    margin-left: -100px;
+    margin-top: 16px;
+}
