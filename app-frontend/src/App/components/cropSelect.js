@@ -13,7 +13,17 @@ export default class CropSelect extends Component {
     render() {
         return (
             <div>
-                <h1>Day {this.props.info.day}</h1>
+                <h3 className="cropSelectDay">Day {this.props.info.day}</h3>
+                <form>
+                    <label for="cropsAvailable">Crops available</label>
+                    <select id="cropsAvailable" name="cropsAvailable">
+                        <option value="australia">Australia</option>
+                        <option value="canada">Canada</option>
+                        <option value="usa">USA</option>
+                    </select>
+                    <input type="submit" value="Add" />
+                </form>
+                <hr></hr>
                 { this.props.info &&
                     this.props.info.data.map(c => 
                         <img src={c.image} alt={c.name} className="cropImg"></img>

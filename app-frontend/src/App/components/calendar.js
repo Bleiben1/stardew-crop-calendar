@@ -36,12 +36,22 @@ export default class Calendar extends Component {
             { headers: {'Content-Type': 'application/json'}}
         )
         this.setState({
+            current_season: 1,
             seasons: await response.json()
         })
     }
 
+    _getCropSeason = async () => {
+        const response =
+        await fetch(`/cropSeason/getCropPerSeason/${encodeURIComponent(this.state.current_season)}`,
+            { headers: {'Content-Type': 'application/json'} }
+        )
+        console.log("_getCropSeason => ", await response.json())
+    }
+
     componentDidMount() {
         this._getSeasonsList()
+        
     }
 
     changeNextSeason = () => {
@@ -51,6 +61,7 @@ export default class Calendar extends Component {
     }
 
     changeShowCropSelect = () => {
+        this._getCropSeason()
         this.setState({
             show_cropSelect: !this.state.show_cropSelect
         })
