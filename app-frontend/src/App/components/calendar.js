@@ -26,8 +26,11 @@ export default class Calendar extends Component {
         this.state = {
             show_cropSelect: false,
             current_season: 0,
-            seasons: [{id: 0, seasonName:"Spring"}]
+            seasons: [{id: 0, seasonName:"Spring"}],
+            cropSeason: [],
+            current_day:0
         }
+        this.changeShowCropSelect = this.changeShowCropSelect.bind(this)
     }
 
     _getSeasonsList = async () => {
@@ -36,17 +39,19 @@ export default class Calendar extends Component {
             { headers: {'Content-Type': 'application/json'}}
         )
         this.setState({
-            current_season: 1,
             seasons: await response.json()
         })
     }
 
     _getCropSeason = async () => {
         const response =
-        await fetch(`/cropSeason/getCropPerSeason/${encodeURIComponent(this.state.current_season)}`,
+        await fetch(`/cropSeason/getCropPerSeason/${encodeURIComponent(this.state.current_season + 1)}`,
             { headers: {'Content-Type': 'application/json'} }
         )
-        console.log("_getCropSeason => ", await response.json())
+        this.setState({
+            cropSeason: await response.json()
+        })
+        console.log("_getCropSeason => ", this.state.cropSeason)
     }
 
     componentDidMount() {
@@ -60,9 +65,10 @@ export default class Calendar extends Component {
         }
     }
 
-    changeShowCropSelect = () => {
+    changeShowCropSelect(_childDay) {
         this._getCropSeason()
         this.setState({
+            current_day: _childDay,
             show_cropSelect: !this.state.show_cropSelect
         })
     }
@@ -70,7 +76,6 @@ export default class Calendar extends Component {
     changePrevSeason = () => {
         if (this.state.current_season > 0) {
             this.setState({current_season: this.state.current_season - 1})
-            this.changeShowCropSelect()
         }
     }
 
@@ -81,7 +86,8 @@ export default class Calendar extends Component {
             <div id="conte">
                 { this.state.show_cropSelect &&
                     <div className="calendar cropSelect">
-                        <CropSelect info={days[0]}/>
+                        {/*<CropSelect info={days[0]}/>*/}
+                        <CropSelect cropSeason={this.state.cropSeason} day={this.state.current_day}/>
                     </div>
                 }
                 <div className="calendar">
@@ -107,142 +113,38 @@ export default class Calendar extends Component {
                         <tr>
                             <CalendarDay day={1} info={days[0]} showCropSelect={this.changeShowCropSelect}/>
                             <CalendarDay day={2} showCropSelect={this.changeShowCropSelect}/>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li><p>3</p></li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li><p>4</p></li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li><p>5</p></li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li><p>6</p></li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li><p>7</p></li>
-                                </ul>
-                            </th>
+                            <CalendarDay day={3} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={4} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={5} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={6} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={7} showCropSelect={this.changeShowCropSelect}/>
                         </tr>
                         <tr>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>8</li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>9</li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>10</li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>11</li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>12</li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>13</li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>14</li>
-                                </ul>
-                            </th>
+                            <CalendarDay day={8} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={9} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={10} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={11} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={12} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={13} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={14} showCropSelect={this.changeShowCropSelect}/>
                         </tr>
                         <tr>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>15</li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>16</li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>17</li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>18</li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>19</li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>20</li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>21</li>
-                                </ul>
-                            </th>
+                            <CalendarDay day={15} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={16} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={17} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={18} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={19} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={20} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={21} showCropSelect={this.changeShowCropSelect}/>
                         </tr>
                         <tr>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>22</li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>23</li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>24</li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>25</li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>26</li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>27</li>
-                                </ul>
-                            </th>
-                            <th className="solid_boder">
-                                <ul>
-                                    <li>28</li>
-                                </ul>
-                            </th>
+                            <CalendarDay day={22} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={23} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={24} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={25} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={26} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={27} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={28} showCropSelect={this.changeShowCropSelect}/>
                         </tr>
                     </table> 
                 </div>
