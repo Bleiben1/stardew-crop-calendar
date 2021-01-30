@@ -1,0 +1,55 @@
+.cropSelect {
+    position: absolute;
+    width: 400px;
+    top: 16px;
+    bottom: 16px;
+    left: 50%;
+    margin-left: -200px;
+    margin-top: 16px;
+    overflow: auto;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.cropSelectDay {
+    margin: 8px auto;
+}
+
+#cropSelectTable {
+    font-family: arial, sans-serif;
+    font-size:  calc(8px + 1vmin);
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#cropSelectTable td,
+#cropSelectTable th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+  }
+  
+#cropSelectTable tr:nth-child(even) {
+    background-color: #dddddd;
+  }

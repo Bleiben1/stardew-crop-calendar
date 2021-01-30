@@ -11,23 +11,6 @@ export default class UserLoginSection extends Component {
         }
         
     }
-    
-
-    /*componentDidMount = async () => {
-        const response =
-        await fetch("/user/isLogedIn",
-            { 
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'}
-            }
-        )
-        console.log(response)
-        if (response.status === 200) {
-            this.setState({
-                isUserLogin: true
-            })
-        }
-    }*/
 
     componentDidMount() {
         fetch("http://localhost:3001/auth/success", {
@@ -77,13 +60,6 @@ export default class UserLoginSection extends Component {
                                     </div>
                                     <img src={userPhoto} alt="user profile" />
                                 </div>
-                                {/*<div id="dropDownMenu">
-                                    <span id="userIDdropDown" className="pulldownMenu">Welcome {userDisplayName}</span>
-                                    <div id="userDropDown">
-                                        <p className="popupMenuItem">Profile</p>
-                                        <p className="popupMenuItem" onClick={this._handleLogoutClick}>Logout</p>
-                                    </div>
-                                </div>*/}
                             </li>
                         ) : (
                             <li onClick={this._handleSignInClick}>
