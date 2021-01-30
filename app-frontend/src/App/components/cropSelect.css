@@ -2,9 +2,11 @@
     position: absolute;
     width: 400px;
     top: 16px;
+    bottom: 16px;
     left: 50%;
     margin-left: -200px;
     margin-top: 16px;
+    overflow: auto;
 }
 
 select {
@@ -33,3 +35,21 @@ input[type=submit]:hover {
 .cropSelectDay {
     margin: 8px auto;
 }
+
+#cropSelectTable {
+    font-family: arial, sans-serif;
+    font-size:  calc(8px + 1vmin);
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#cropSelectTable td,
+#cropSelectTable th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+  }
+  
+#cropSelectTable tr:nth-child(even) {
+    background-color: #dddddd;
+  }

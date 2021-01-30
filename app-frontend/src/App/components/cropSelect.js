@@ -34,7 +34,23 @@ export default class CropSelect extends Component {
                     <input type="submit" value="Add" />
                 </form>
                 <hr></hr>
-
+                <table id="cropSelectTable">
+                    <tr>
+                        <th colSpan="2">Crop</th>
+                        <th>Grow (days)</th>
+                        <th>Regrow (days)</th>
+                    </tr>
+                    { this.props.info &&
+                        this.props.info.data.map(c => 
+                            <tr>
+                                <td><img src={c.image} alt={c.name} className="cropImg"></img></td>
+                                <td>{c.name}</td>
+                                <td>6</td>
+                                <td>0</td>
+                            </tr>
+                        )
+                    }
+                </table>
                 <br></br>
                 <input type="submit" value="Save"></input>
             </div>

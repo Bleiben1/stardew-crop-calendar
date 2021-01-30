@@ -9,14 +9,39 @@ import React, {Component} from 'react'
 var days = [
     {day: 1, data: [
                 {
-                    name: ["potato_img"], 
+                    name: ["Potato"], 
                     image: [potato_img]
                 },
                 {
-                    name: ["parsnip_img"], 
+                    name: ["Parsnip"], 
                     image: ["https://bleiben1.github.io/stardew_crops/parsnip.png"]
                 }
             ]
+    },
+    {
+        day: 2,
+        data: []
+    },
+    {
+        day: 3,
+        data: []
+    },
+    {
+        day: 4,
+        data: []
+    },
+    {
+        day: 5,
+        data: []
+    }
+    ,
+    {
+        day: 6,
+        data: []
+    },
+    {
+        day: 7,
+        data: []
     }
 ]
 
@@ -28,7 +53,8 @@ export default class Calendar extends Component {
             current_season: 0,
             seasons: [{id: 0, seasonName:"Spring"}],
             cropSeason: [],
-            current_day:0
+            current_day:0,
+            dayData: []
         }
         this.changeShowCropSelect = this.changeShowCropSelect.bind(this)
     }
@@ -65,20 +91,21 @@ export default class Calendar extends Component {
         }
     }
 
-    changeShowCropSelect(_childDay) {
-        this._getCropSeason()
-        this.setState({
-            current_day: _childDay,
-            show_cropSelect: !this.state.show_cropSelect
-        })
-    }
-
     changePrevSeason = () => {
         if (this.state.current_season > 0) {
             this.setState({current_season: this.state.current_season - 1})
         }
     }
 
+    changeShowCropSelect(_childDay, _childInfo) {
+        this._getCropSeason()
+        this.setState({
+            current_day: _childDay,
+            show_cropSelect: !this.state.show_cropSelect,
+            dayData: _childInfo
+        })
+    }
+    
     render(){
         const current = this.state.current_season
         const season = this.state.seasons[current].seasonName
@@ -87,11 +114,11 @@ export default class Calendar extends Component {
                 { this.state.show_cropSelect &&
                     <div className="calendar cropSelect">
                         {/*<CropSelect info={days[0]}/>*/}
-                        <CropSelect cropSeason={this.state.cropSeason} day={this.state.current_day}/>
+                        <CropSelect cropSeason={this.state.cropSeason} day={this.state.current_day} info={this.state.dayData}/>
                     </div>
                 }
                 <div className="calendar">
-                    <table>
+                    <table className="calendarTable">
                         <tr>
                             <th className="noBorder" colSpan="7">
                                 <img src={arrow_left} alt="prev_season" className="prev_next_button" 
@@ -112,12 +139,12 @@ export default class Calendar extends Component {
                         </tr>
                         <tr>
                             <CalendarDay day={1} info={days[0]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={2} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={3} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={4} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={5} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={6} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={7} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={2} info={days[1]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={3} info={days[2]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={4} info={days[3]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={5} info={days[4]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={6} info={days[5]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay day={7} info={days[6]} showCropSelect={this.changeShowCropSelect}/>
                         </tr>
                         <tr>
                             <CalendarDay day={8} showCropSelect={this.changeShowCropSelect}/>
