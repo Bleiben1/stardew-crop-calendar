@@ -10,11 +10,13 @@ var days = [
     {day: 1, data: [
                 {
                     name: ["Potato"], 
-                    image: [potato_img]
+                    image: [potato_img],
+                    isHarvest: false
                 },
                 {
                     name: ["Parsnip"], 
-                    image: ["https://bleiben1.github.io/stardew_crops/parsnip.png"]
+                    image: ["https://bleiben1.github.io/stardew_crops/parsnip.png"],
+                    isHarvest: false
                 }
             ]
     },
@@ -56,7 +58,8 @@ export default class Calendar extends Component {
             current_day:0,
             dayData: []
         }
-        this.changeShowCropSelect = this.changeShowCropSelect.bind(this)
+        this.changeShowCropSelect = this.changeShowCropSelect.bind(this) //define if the cropSelect component must be shown and send the data to it
+        this.handleCropSelectChange = this.handleCropSelectChange(this) //manage the modification of the 
     }
 
     _getSeasonsList = async () => {
@@ -104,6 +107,10 @@ export default class Calendar extends Component {
             show_cropSelect: !this.state.show_cropSelect,
             dayData: _childInfo
         })
+    }
+
+    handleCropSelectChange(){
+        console.log("test")
     }
     
     render(){

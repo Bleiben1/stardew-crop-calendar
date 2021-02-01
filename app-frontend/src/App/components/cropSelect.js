@@ -36,17 +36,16 @@ export default class CropSelect extends Component {
                 <hr></hr>
                 <table id="cropSelectTable">
                     <tr>
-                        <th colSpan="2">Crop</th>
-                        <th>Grow (days)</th>
-                        <th>Regrow (days)</th>
+                        <th colSpan="2">Grow</th>
+                        <th colSpan="2">Harvest</th>
                     </tr>
                     { this.props.info &&
                         this.props.info.data.map(c => 
                             <tr>
                                 <td><img src={c.image} alt={c.name} className="cropImg"></img></td>
                                 <td>{c.name}</td>
-                                <td>6</td>
-                                <td>0</td>
+                                <td><img src={c.image} alt={c.name} className="cropImg"></img></td>
+                                <td>{c.name}</td>
                             </tr>
                         )
                     }
