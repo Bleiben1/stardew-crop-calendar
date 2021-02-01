@@ -9,14 +9,12 @@ import React, {Component} from 'react'
 var days = [
     {day: 1, data: [
                 {
-                    name: ["Potato"], 
-                    image: [potato_img],
-                    isHarvest: false
+                    name: ["potato_img"], 
+                    image: [potato_img]
                 },
                 {
-                    name: ["Parsnip"], 
-                    image: ["https://bleiben1.github.io/stardew_crops/parsnip.png"],
-                    isHarvest: false
+                    name: ["parsnip_img"], 
+                    image: ["https://bleiben1.github.io/stardew_crops/parsnip.png"]
                 }
             ]
     },
@@ -56,10 +54,10 @@ export default class Calendar extends Component {
             seasons: [{id: 0, seasonName:"Spring"}],
             cropSeason: [],
             current_day:0,
-            dayData: []
+            userCrop: []
         }
-        this.changeShowCropSelect = this.changeShowCropSelect.bind(this) //define if the cropSelect component must be shown and send the data to it
-        this.handleCropSelectChange = this.handleCropSelectChange(this) //manage the modification of the 
+        this.changeShowCropSelect = this.changeShowCropSelect.bind(this)
+        this.changeUserCrop = this.changeUserCrop.bind(this)
     }
 
     _getSeasonsList = async () => {
@@ -100,19 +98,26 @@ export default class Calendar extends Component {
         }
     }
 
-    changeShowCropSelect(_childDay, _childInfo) {
+    changeShowCropSelect(_childDay) {
         this._getCropSeason()
         this.setState({
             current_day: _childDay,
-            show_cropSelect: !this.state.show_cropSelect,
-            dayData: _childInfo
+            show_cropSelect: !this.state.show_cropSelect
         })
     }
 
-    handleCropSelectChange(){
-        console.log("test")
+    changeUserCrop(_childUserCrop) {
+        var newUserCrop = 
+            {
+                day: this.state.current_day, data: _childUserCrop
+            }
+        var copyUserCrop = this.state.userCrop
+        copyUserCrop.push(newUserCrop)
+        this.setState({
+            userCrop: copyUserCrop
+        })
     }
-    
+
     render(){
         const current = this.state.current_season
         const season = this.state.seasons[current].seasonName
@@ -121,11 +126,11 @@ export default class Calendar extends Component {
                 { this.state.show_cropSelect &&
                     <div className="calendar cropSelect">
                         {/*<CropSelect info={days[0]}/>*/}
-                        <CropSelect cropSeason={this.state.cropSeason} day={this.state.current_day} info={this.state.dayData}/>
+                        <CropSelect cropSeason={this.state.cropSeason} day={this.state.current_day} changeUserCrop={this.changeUserCrop}/>
                     </div>
                 }
                 <div className="calendar">
-                    <table className="calendarTable">
+                    <table>
                         <tr>
                             <th className="noBorder" colSpan="7">
                                 <img src={arrow_left} alt="prev_season" className="prev_next_button" 

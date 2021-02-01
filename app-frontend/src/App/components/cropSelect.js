@@ -6,8 +6,29 @@ export default class CropSelect extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            info: []
+            info: [],
+            selectOption: []
         }
+        this.changeUserCrop = this.changeUserCrop.bind(this)
+        this.selectOptionChange = this.selectOptionChange.bind(this)
+    }
+
+    changeUserCrop(event){
+        var newInfo = this.state.info
+        newInfo.push(this.state.selectOption)
+        this.setState({
+            info: newInfo
+        })
+        this.props.changeUserCrop(this.state.info)
+        event.preventDefault()
+    }
+
+    selectOptionChange(event) {
+        console.log("selectOptionChange event.target.value => ", event.target.value)
+        this.setState({
+            selectOption: event.target.value
+        })
+        console.log("selectOptionChange this.state.selectOption => ", this.state.selectOption)
     }
 
     render() {
@@ -15,7 +36,7 @@ export default class CropSelect extends Component {
             <div>
                 { /*<h3 className="cropSelectDay">Day {this.props.info.day}</h3>*/ }
                 <h3 className="cropSelectDay">Day {this.props.day}</h3>
-                <form>
+                <form onSubmit={this.changeUserCrop}>
                     <label for="cropsAvailable">Crops available</label>
                     <br></br>
                     { this.props.cropSeason &&
@@ -23,33 +44,18 @@ export default class CropSelect extends Component {
                             <img src={c.imgURL} alt={c.cropName} className="cropImg"></img>
                         )
                     }
-                    <select id="cropsAvailable" name="cropsAvailable">
+                    <select id="cropsAvailable" name="cropsAvailable" onChange={this.selectOptionChange}>
                         { /*<option value="australia">Australia</option>*/ }
                         { this.props.cropSeason &&
                             this.props.cropSeason.map(c => 
-                                <option value={c.cropName}>{c.cropName}</option>
+                                <option value={{"name": c.cropName, "image": c.imgURL}}>{c.cropName}</option>
                             )
                         }
                     </select>
                     <input type="submit" value="Add" />
                 </form>
                 <hr></hr>
-                <table id="cropSelectTable">
-                    <tr>
-                        <th colSpan="2">Grow</th>
-                        <th colSpan="2">Harvest</th>
-                    </tr>
-                    { this.props.info &&
-                        this.props.info.data.map(c => 
-                            <tr>
-                                <td><img src={c.image} alt={c.name} className="cropImg"></img></td>
-                                <td>{c.name}</td>
-                                <td><img src={c.image} alt={c.name} className="cropImg"></img></td>
-                                <td>{c.name}</td>
-                            </tr>
-                        )
-                    }
-                </table>
+
                 <br></br>
                 <input type="submit" value="Save"></input>
             </div>
