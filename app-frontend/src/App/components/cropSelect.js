@@ -17,10 +17,14 @@ export default class CropSelect extends Component {
         if (this.state.selectOption !== null){    
             var newInfo = this.state.info
             newInfo.push(this.state.selectOption)
+            var newObj = {
+                day: this.props.day,
+                data: newInfo
+            }
             this.setState({
                 info: newInfo
             })
-            this.props.changeUserCrop(newInfo)
+            this.props.changeUserCrop(newObj)
         }
         event.preventDefault()
     }

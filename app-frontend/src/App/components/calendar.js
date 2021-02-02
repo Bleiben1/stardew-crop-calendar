@@ -1,7 +1,6 @@
 import './calendar.css'
 import arrow_left from '../../imgs/arrow_left.png'
 import arrow_right from '../../imgs/arrow_right.png'
-import potato_img from '../../imgs/crops/potato.png'
 import CalendarDay from './calendar_day.js'
 import CropSelect from './cropSelect.js'
 import React, {Component} from 'react'
@@ -10,7 +9,7 @@ var days = [
     {day: 1, data: [
                 {
                     name: ["potato_img"], 
-                    image: [potato_img]
+                    image: ["https://bleiben1.github.io/stardew_crops/potato.png"]
                 },
                 {
                     name: ["parsnip_img"], 
@@ -42,7 +41,91 @@ var days = [
     {
         day: 7,
         data: []
-    }
+    },
+    {
+        day: 8,
+        data: []
+    },
+    {
+        day: 9,
+        data: []
+    },
+    {
+        day: 10,
+        data: []
+    },
+    {
+        day: 11,
+        data: []
+    },
+    {
+        day: 12,
+        data: []
+    },
+    {
+        day: 13,
+        data: []
+    },
+    {
+        day: 14,
+        data: []
+    },
+    {
+        day: 15,
+        data: []
+    },
+    {
+        day: 16,
+        data: []
+    },
+    {
+        day: 17,
+        data: []
+    },
+    {
+        day: 18,
+        data: []
+    },
+    {
+        day: 19,
+        data: []
+    },
+    {
+        day: 20,
+        data: []
+    },
+    {
+        day: 21,
+        data: []
+    },
+    {
+        day: 22,
+        data: []
+    },
+    {
+        day: 23,
+        data: []
+    },
+    {
+        day: 24,
+        data: []
+    },
+    {
+        day: 25,
+        data: []
+    },
+    {
+        day: 26,
+        data: []
+    },
+    {
+        day: 27,
+        data: []
+    },
+    {
+        day: 28,
+        data: []
+    },
 ]
 
 export default class Calendar extends Component {
@@ -107,17 +190,21 @@ export default class Calendar extends Component {
     }
 
     changeUserCrop(_childUserCrop) {
-        console.log("userCrop current state ", this.state.userCrop, " _childUserCrop ", _childUserCrop)
-        if (this.state.userCrop) {
-            for (var i = 0; i < this.state.userCrop.length; i++) {
-                if (this.state.userCrop[i]["day"] === this.state.current_day) {
-                    console.log("aleady exist data for the day ", _childUserCrop)
-                } else {
-                    console.log("does not exist data for the day ", _childUserCrop)
-                }
-            }
-        } else { console.log("no userCrop")}
+        console.log(" _childUserCrop ", _childUserCrop)
+        console.log("days before ", days)
+        let found = -1
+        days.map( (uc, index) => uc.day === this.state.current_day ? 
+                found = index
+            : 
+                found = found)
+        if ( found !== -1) {
+            days[found] = _childUserCrop
+        } else {
+            days.push(_childUserCrop)
+        }
+        console.log("days after ", days)
     }
+
 
     componentDidUpdate() {
         console.log("calendar componentDidUpdate this.state.userCrop => ", this.state.userCrop)
@@ -155,40 +242,40 @@ export default class Calendar extends Component {
                             <th>Su</th>
                         </tr>
                         <tr>
-                            <CalendarDay day={1} info={days[0]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={2} info={days[1]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={3} info={days[2]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={4} info={days[3]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={5} info={days[4]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={6} info={days[5]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={7} info={days[6]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[0]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[1]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[2]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[3]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[4]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[5]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[6]} showCropSelect={this.changeShowCropSelect}/>
                         </tr>
                         <tr>
-                            <CalendarDay day={8} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={9} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={10} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={11} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={12} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={13} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={14} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[7]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[8]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[9]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[10]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[11]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[12]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[13]} showCropSelect={this.changeShowCropSelect}/>
                         </tr>
                         <tr>
-                            <CalendarDay day={15} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={16} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={17} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={18} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={19} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={20} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={21} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[14]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[15]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[16]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[17]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[18]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[18]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[20]} showCropSelect={this.changeShowCropSelect}/>
                         </tr>
                         <tr>
-                            <CalendarDay day={22} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={23} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={24} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={25} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={26} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={27} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay day={28} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[21]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[22]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[23]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[24]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[25]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[26]} showCropSelect={this.changeShowCropSelect}/>
+                            <CalendarDay info={days[27]} showCropSelect={this.changeShowCropSelect}/>
                         </tr>
                     </table> 
                 </div>
