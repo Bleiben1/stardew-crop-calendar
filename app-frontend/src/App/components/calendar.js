@@ -107,15 +107,20 @@ export default class Calendar extends Component {
     }
 
     changeUserCrop(_childUserCrop) {
-        var newUserCrop = 
-            {
-                day: this.state.current_day, data: _childUserCrop
+        console.log("userCrop current state ", this.state.userCrop, " _childUserCrop ", _childUserCrop)
+        if (this.state.userCrop) {
+            for (var i = 0; i < this.state.userCrop.length; i++) {
+                if (this.state.userCrop[i]["day"] === this.state.current_day) {
+                    console.log("aleady exist data for the day ", _childUserCrop)
+                } else {
+                    console.log("does not exist data for the day ", _childUserCrop)
+                }
             }
-        var copyUserCrop = this.state.userCrop
-        copyUserCrop.push(newUserCrop)
-        this.setState({
-            userCrop: copyUserCrop
-        })
+        } else { console.log("no userCrop")}
+    }
+
+    componentDidUpdate() {
+        console.log("calendar componentDidUpdate this.state.userCrop => ", this.state.userCrop)
     }
 
     render(){

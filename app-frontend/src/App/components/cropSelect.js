@@ -7,28 +7,41 @@ export default class CropSelect extends Component {
         super(props)
         this.state = {
             info: [],
-            selectOption: []
+            selectOption: {}
         }
         this.changeUserCrop = this.changeUserCrop.bind(this)
         this.selectOptionChange = this.selectOptionChange.bind(this)
     }
 
     changeUserCrop(event){
-        var newInfo = this.state.info
-        newInfo.push(this.state.selectOption)
-        this.setState({
-            info: newInfo
-        })
-        this.props.changeUserCrop(this.state.info)
+        if (this.state.selectOption !== null){    
+            var newInfo = this.state.info
+            newInfo.push(this.state.selectOption)
+            this.setState({
+                info: newInfo
+            })
+            this.props.changeUserCrop(newInfo)
+        }
         event.preventDefault()
     }
 
     selectOptionChange(event) {
-        console.log("selectOptionChange event.target.value => ", event.target.value)
-        this.setState({
-            selectOption: event.target.value
-        })
-        console.log("selectOptionChange this.state.selectOption => ", this.state.selectOption)
+        if (event.target.value !== "999"){
+            console.log("this.props.cropSeason[event.target.value] => ", this.props.cropSeason[event.target.value])
+            this.setState({
+                selectOption: this.props.cropSeason[event.target.value]
+            })
+        } else {
+            console.log("Default selectOption selected, doing nathing more")
+            this.setState({
+                selectOption: null
+            })
+        }
+    }
+
+    componentDidUpdate(){
+        console.log("componentDidUpdate this.state.selectOption => ", this.state.selectOption)
+        console.log("componentDidUpdate this.state.info => ", this.state.info)
     }
 
     render() {
@@ -45,10 +58,11 @@ export default class CropSelect extends Component {
                         )
                     }
                     <select id="cropsAvailable" name="cropsAvailable" onChange={this.selectOptionChange}>
-                        { /*<option value="australia">Australia</option>*/ }
+                        { <option value="999">Please select a crop</option> }
                         { this.props.cropSeason &&
-                            this.props.cropSeason.map(c => 
-                                <option value={{"name": c.cropName, "image": c.imgURL}}>{c.cropName}</option>
+                            this.props.cropSeason.map( (c, index) => 
+                                //<option value={{info: {"name": c.cropName, "image": c.imgURL}}}>{c.cropName}</option>
+                                <option value={index}>{c.cropName}</option>
                             )
                         }
                     </select>
