@@ -43,6 +43,11 @@ export default class CropSelect extends Component {
         }
     }
 
+    componentDidMount() {
+        console.log("this.props.info => ", this.props.info)
+        this.setState({info: this.props.info})
+    }
+    
     componentDidUpdate(){
         console.log("componentDidUpdate this.state.selectOption => ", this.state.selectOption)
         console.log("componentDidUpdate this.state.info => ", this.state.info)
@@ -73,7 +78,13 @@ export default class CropSelect extends Component {
                     <input type="submit" value="Add" />
                 </form>
                 <hr></hr>
-
+                <table>
+                    <tbody>
+                        <tr>
+                            <th colSpan={2}>Crop</th>
+                        </tr>
+                    </tbody>
+                </table>
                 <br></br>
                 <input type="submit" value="Save"></input>
             </div>

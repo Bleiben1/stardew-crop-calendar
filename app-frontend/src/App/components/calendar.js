@@ -137,6 +137,7 @@ export default class Calendar extends Component {
             seasons: [{id: 0, seasonName:"Spring"}],
             cropSeason: [],
             current_day:0,
+            current_dayCrop: [],
             userCrop: []
         }
         this.changeShowCropSelect = this.changeShowCropSelect.bind(this)
@@ -181,10 +182,11 @@ export default class Calendar extends Component {
         }
     }
 
-    changeShowCropSelect(_childDay) {
+    changeShowCropSelect(_childInfo) {
         this._getCropSeason()
         this.setState({
-            current_day: _childDay,
+            current_day: _childInfo.day,
+            current_dayCrop: _childInfo.data,
             show_cropSelect: !this.state.show_cropSelect
         })
     }
@@ -196,7 +198,7 @@ export default class Calendar extends Component {
         days.map( (uc, index) => uc.day === this.state.current_day ? 
                 found = index
             : 
-                found = found)
+                found += 0)
         if ( found !== -1) {
             days[found] = _childUserCrop
         } else {
@@ -218,65 +220,67 @@ export default class Calendar extends Component {
                 { this.state.show_cropSelect &&
                     <div className="calendar cropSelect">
                         {/*<CropSelect info={days[0]}/>*/}
-                        <CropSelect cropSeason={this.state.cropSeason} day={this.state.current_day} changeUserCrop={this.changeUserCrop}/>
+                        <CropSelect cropSeason={this.state.cropSeason} day={this.state.current_day} info={this.state.current_dayCrop} changeUserCrop={this.changeUserCrop}/>
                     </div>
                 }
                 <div className="calendar">
                     <table>
-                        <tr>
-                            <th className="noBorder" colSpan="7">
-                                <img src={arrow_left} alt="prev_season" className="prev_next_button" 
-                                onClick={this.changePrevSeason} ></img>
-                                { season }
-                                <img src={arrow_right} alt="next_season" className="prev_next_button"
-                                onClick={this.changeNextSeason} ></img>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th className="noRightBorder">M</th>
-                            <th className="noRightBorder">T</th>
-                            <th className="noRightBorder">W</th>
-                            <th className="noRightBorder">Th</th>
-                            <th className="noRightBorder">F</th>
-                            <th className="noRightBorder">Sa</th>
-                            <th>Su</th>
-                        </tr>
-                        <tr>
-                            <CalendarDay info={days[0]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[1]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[2]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[3]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[4]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[5]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[6]} showCropSelect={this.changeShowCropSelect}/>
-                        </tr>
-                        <tr>
-                            <CalendarDay info={days[7]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[8]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[9]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[10]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[11]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[12]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[13]} showCropSelect={this.changeShowCropSelect}/>
-                        </tr>
-                        <tr>
-                            <CalendarDay info={days[14]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[15]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[16]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[17]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[18]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[18]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[20]} showCropSelect={this.changeShowCropSelect}/>
-                        </tr>
-                        <tr>
-                            <CalendarDay info={days[21]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[22]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[23]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[24]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[25]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[26]} showCropSelect={this.changeShowCropSelect}/>
-                            <CalendarDay info={days[27]} showCropSelect={this.changeShowCropSelect}/>
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <th className="noBorder" colSpan="7">
+                                    <img src={arrow_left} alt="prev_season" className="prev_next_button" 
+                                    onClick={this.changePrevSeason} ></img>
+                                    { season }
+                                    <img src={arrow_right} alt="next_season" className="prev_next_button"
+                                    onClick={this.changeNextSeason} ></img>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th className="noRightBorder">M</th>
+                                <th className="noRightBorder">T</th>
+                                <th className="noRightBorder">W</th>
+                                <th className="noRightBorder">Th</th>
+                                <th className="noRightBorder">F</th>
+                                <th className="noRightBorder">Sa</th>
+                                <th>Su</th>
+                            </tr>
+                            <tr>
+                                <CalendarDay info={days[0]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[1]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[2]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[3]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[4]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[5]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[6]} showCropSelect={this.changeShowCropSelect}/>
+                            </tr>
+                            <tr>
+                                <CalendarDay info={days[7]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[8]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[9]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[10]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[11]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[12]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[13]} showCropSelect={this.changeShowCropSelect}/>
+                            </tr>
+                            <tr>
+                                <CalendarDay info={days[14]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[15]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[16]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[17]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[18]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[18]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[20]} showCropSelect={this.changeShowCropSelect}/>
+                            </tr>
+                            <tr>
+                                <CalendarDay info={days[21]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[22]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[23]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[24]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[25]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[26]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[27]} showCropSelect={this.changeShowCropSelect}/>
+                            </tr>
+                        </tbody>
                     </table> 
                 </div>
             </div>
