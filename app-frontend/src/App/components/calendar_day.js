@@ -13,6 +13,7 @@ export default class CalendarDay extends Component {
     }
 
     changeShowCropSelectFromChild(){
+        console.log("calendar_day changeShowCropSelectFromChild")
         this.props.showCropSelect(this.props.info)
     }
 

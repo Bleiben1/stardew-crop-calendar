@@ -6,126 +6,10 @@ import CropSelect from './cropSelect.js'
 import React, {Component} from 'react'
 
 var days = [
-    {day: 1, data: [
-                {
-                    name: ["potato_img"], 
-                    image: ["https://bleiben1.github.io/stardew_crops/potato.png"]
-                },
-                {
-                    name: ["parsnip_img"], 
-                    image: ["https://bleiben1.github.io/stardew_crops/parsnip.png"]
-                }
-            ]
-    },
-    {
-        day: 2,
-        data: []
-    },
-    {
-        day: 3,
-        data: []
-    },
-    {
-        day: 4,
-        data: []
-    },
-    {
-        day: 5,
-        data: []
-    }
-    ,
-    {
-        day: 6,
-        data: []
-    },
-    {
-        day: 7,
-        data: []
-    },
-    {
-        day: 8,
-        data: []
-    },
-    {
-        day: 9,
-        data: []
-    },
-    {
-        day: 10,
-        data: []
-    },
-    {
-        day: 11,
-        data: []
-    },
-    {
-        day: 12,
-        data: []
-    },
-    {
-        day: 13,
-        data: []
-    },
-    {
-        day: 14,
-        data: []
-    },
-    {
-        day: 15,
-        data: []
-    },
-    {
-        day: 16,
-        data: []
-    },
-    {
-        day: 17,
-        data: []
-    },
-    {
-        day: 18,
-        data: []
-    },
-    {
-        day: 19,
-        data: []
-    },
-    {
-        day: 20,
-        data: []
-    },
-    {
-        day: 21,
-        data: []
-    },
-    {
-        day: 22,
-        data: []
-    },
-    {
-        day: 23,
-        data: []
-    },
-    {
-        day: 24,
-        data: []
-    },
-    {
-        day: 25,
-        data: []
-    },
-    {
-        day: 26,
-        data: []
-    },
-    {
-        day: 27,
-        data: []
-    },
-    {
-        day: 28,
-        data: []
-    },
+    {day: 1, data: []},{day: 2, data: []},{day: 3, data: []},{day: 4, data: []},{day: 5, data: []},{day: 6, data: []},{day: 7, data: []},
+    {day: 8, data: []},{day: 9, data: []},{day: 10, data: []},{day: 11, data: []},{day: 12, data: []},{day: 13, data: []},{day: 14, data: []},
+    {day: 15, data: []},{day: 16, data: []},{day: 17, data: []},{day: 18, data: []},{day: 19, data: []},{day: 20, data: []},{day: 21, data: []},
+    {day: 22, data: []},{day: 23, data: []},{day: 24, data: []},{day: 25, data: []},{day: 26, data: []},{day: 27, data: []},{day: 28, data: []}
 ]
 
 export default class Calendar extends Component {
@@ -145,6 +29,7 @@ export default class Calendar extends Component {
     }
 
     _getSeasonsList = async () => {
+        console.log("calendar _getSeasonList")
         const response =
         await fetch("/season",
             { headers: {'Content-Type': 'application/json'}}
@@ -155,6 +40,7 @@ export default class Calendar extends Component {
     }
 
     _getCropSeason = async () => {
+        console.log("calendar _getCropSeason")
         const response =
         await fetch(`/cropSeason/getCropPerSeason/${encodeURIComponent(this.state.current_season + 1)}`,
             { headers: {'Content-Type': 'application/json'} }
@@ -162,27 +48,30 @@ export default class Calendar extends Component {
         this.setState({
             cropSeason: await response.json()
         })
-        console.log("_getCropSeason => ", this.state.cropSeason)
     }
 
     componentDidMount() {
+        console.log("calendar componentDidMount")
         this._getSeasonsList()
         
     }
 
     changeNextSeason = () => {
+        console.log("calendar changeNextSeason")
         if (this.state.current_season < this.state.seasons.length - 1) {
             this.setState({current_season: this.state.current_season + 1})
         }
     }
 
     changePrevSeason = () => {
+        console.log("calendar changePrevSeason")
         if (this.state.current_season > 0) {
             this.setState({current_season: this.state.current_season - 1})
         }
     }
 
     changeShowCropSelect(_childInfo) {
+        console.log("calendar changeShowCropSelect")
         this._getCropSeason()
         this.setState({
             current_day: _childInfo.day,
@@ -192,8 +81,7 @@ export default class Calendar extends Component {
     }
 
     changeUserCrop(_childUserCrop) {
-        console.log(" _childUserCrop ", _childUserCrop)
-        console.log("days before ", days)
+        console.log("calendar changeUserCrop")
         let found = -1
         days.map( (uc, index) => uc.day === this.state.current_day ? 
                 found = index
@@ -204,12 +92,11 @@ export default class Calendar extends Component {
         } else {
             days.push(_childUserCrop)
         }
-        console.log("days after ", days)
     }
 
 
     componentDidUpdate() {
-        console.log("calendar componentDidUpdate this.state.userCrop => ", this.state.userCrop)
+        console.log("calendar componentDidUpdate")
     }
 
     render(){
@@ -219,7 +106,6 @@ export default class Calendar extends Component {
             <div id="conte">
                 { this.state.show_cropSelect &&
                     <div className="calendar cropSelect">
-                        {/*<CropSelect info={days[0]}/>*/}
                         <CropSelect cropSeason={this.state.cropSeason} day={this.state.current_day} info={this.state.current_dayCrop} changeUserCrop={this.changeUserCrop}/>
                     </div>
                 }
@@ -287,9 +173,3 @@ export default class Calendar extends Component {
         )
     }
 }
-
-/*function Main() {
-    
-}
-
-export default Main;*/
