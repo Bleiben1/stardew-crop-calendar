@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import './cropSelect.css'
+import ShowEntry from './showEntry.js'
 
 export default class CropSelect extends Component {
 
@@ -11,6 +12,7 @@ export default class CropSelect extends Component {
         }
         this.changeUserCrop = this.changeUserCrop.bind(this)
         this.selectOptionChange = this.selectOptionChange.bind(this)
+        this.addHarvestCrop = this.addHarvestCrop.bind(this)
     }
 
     changeUserCrop(event){
@@ -20,22 +22,29 @@ export default class CropSelect extends Component {
             newInfo.push(this.state.selectOption)
             var newObj = {
                 day: this.props.day,
-                data: newInfo,
-                isHarvest: false
+                data: newInfo
             }
             this.setState({
                 info: newInfo
             })
             this.props.changeUserCrop(newObj)
+            this.addHarvestCrop(this.state.selectOption, this.props.day)
         }
         event.preventDefault()
+    }
+
+    addHarvestCrop(_childCrop, _childDay){
+        console.log("cropSelect addHarvestCrop")
+        this.props.addHarvestCrop(_childCrop, _childDay)
     }
 
     selectOptionChange(event) {
         console.log("cropSelect selectOptionChange")
         if (event.target.value !== "999"){
+            var copyCropSeason = this.props.cropSeason[event.target.value]
+            copyCropSeason.isHarvest = false
             this.setState({
-                selectOption: this.props.cropSeason[event.target.value]
+                selectOption: copyCropSeason
             })
         } else {
             this.setState({
@@ -62,7 +71,7 @@ export default class CropSelect extends Component {
                     <br></br>
                     { this.props.cropSeason &&
                         this.props.cropSeason.map(c => 
-                            <img src={c.imgURL} alt={c.cropName} className="cropImg"></img>
+                            <img key={c.imgURL+c.cropName} src={c.imgURL} alt={c.cropName} className="cropImg"></img>
                         )
                     }
                     <select id="cropsAvailable" name="cropsAvailable" onChange={this.selectOptionChange}>
@@ -84,18 +93,13 @@ export default class CropSelect extends Component {
                         </tr>
                         { this.state.info &&
                             this.state.info.map(c => 
-                                <tr>
-                                    <td><img src={c.imgURL} alt={c.cropName} className="cropImg"></img></td>
-                                    <td>{c.cropName}</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                <ShowEntry name={c.cropName} image={c.imgURL} isHarvest={c.isHarvest} />
                             )
                         }
                     </tbody>
                 </table>
                 <br></br>
-                <input type="submit" value="Save"></input>
+                <input type="submit" value="Save Changes"></input>
             </div>
         )
     }

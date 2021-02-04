@@ -26,6 +26,7 @@ export default class Calendar extends Component {
         }
         this.changeShowCropSelect = this.changeShowCropSelect.bind(this)
         this.changeUserCrop = this.changeUserCrop.bind(this)
+        this.addHarvestCrop = this.addHarvestCrop.bind(this)
     }
 
     _getSeasonsList = async () => {
@@ -82,16 +83,16 @@ export default class Calendar extends Component {
 
     changeUserCrop(_childUserCrop) {
         console.log("calendar changeUserCrop")
-        let found = -1
-        days.map( (uc, index) => uc.day === this.state.current_day ? 
-                found = index
-            : 
-                found += 0)
-        if ( found !== -1) {
-            days[found] = _childUserCrop
-        } else {
-            days.push(_childUserCrop)
-        }
+        var index = _childUserCrop.day - 1
+        days[index] = _childUserCrop
+    }
+
+    addHarvestCrop(_childCrop, _childDay) {
+        console.log("calendar addHarvestCrop")
+        _childCrop.isHarvest = true
+        var harvestDay = days[_childCrop.grow + _childDay - 1]
+        harvestDay.data.push(_childCrop)
+        this.changeUserCrop(harvestDay)
     }
 
 
@@ -106,7 +107,7 @@ export default class Calendar extends Component {
             <div id="conte">
                 { this.state.show_cropSelect &&
                     <div className="calendar cropSelect">
-                        <CropSelect cropSeason={this.state.cropSeason} day={this.state.current_day} info={this.state.current_dayCrop} changeUserCrop={this.changeUserCrop}/>
+                        <CropSelect cropSeason={this.state.cropSeason} day={this.state.current_day} info={this.state.current_dayCrop} changeUserCrop={this.changeUserCrop} addHarvestCrop={this.addHarvestCrop}/>
                     </div>
                 }
                 <div className="calendar">
