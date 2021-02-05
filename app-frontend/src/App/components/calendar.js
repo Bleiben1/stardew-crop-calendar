@@ -88,11 +88,12 @@ export default class Calendar extends Component {
     }
 
     addHarvestCrop(_childCrop, _childDay) {
-        console.log("calendar addHarvestCrop")
-        _childCrop.isHarvest = true
+        console.log("calendar addHarvestCrop _childCrop => ", _childCrop)
         var harvestDay = days[_childCrop.grow + _childDay - 1]
+        _childCrop.isHarvest = true
         harvestDay.data.push(_childCrop)
         this.changeUserCrop(harvestDay)
+        console.log("calendar addHarvestCrop harvestDay => ", harvestDay)
     }
 
 
@@ -155,7 +156,7 @@ export default class Calendar extends Component {
                                 <CalendarDay info={days[16]} showCropSelect={this.changeShowCropSelect}/>
                                 <CalendarDay info={days[17]} showCropSelect={this.changeShowCropSelect}/>
                                 <CalendarDay info={days[18]} showCropSelect={this.changeShowCropSelect}/>
-                                <CalendarDay info={days[18]} showCropSelect={this.changeShowCropSelect}/>
+                                <CalendarDay info={days[19]} showCropSelect={this.changeShowCropSelect}/>
                                 <CalendarDay info={days[20]} showCropSelect={this.changeShowCropSelect}/>
                             </tr>
                             <tr>

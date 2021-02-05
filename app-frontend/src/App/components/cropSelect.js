@@ -19,7 +19,10 @@ export default class CropSelect extends Component {
         console.log("cropSelect changeUserCrop")
         if (this.state.selectOption !== null){    
             var newInfo = this.state.info
+            var copySelectOption = {...this.state.selectOption}
+            console.log("cropSelect changeUserCrop this.state.selecOption => ", this.state.selectOption)
             newInfo.push(this.state.selectOption)
+            console.log("cropSelect changeUserCrop copySelectOption => ", newInfo)
             var newObj = {
                 day: this.props.day,
                 data: newInfo
@@ -28,13 +31,13 @@ export default class CropSelect extends Component {
                 info: newInfo
             })
             this.props.changeUserCrop(newObj)
-            this.addHarvestCrop(this.state.selectOption, this.props.day)
+            this.props.addHarvestCrop(copySelectOption, this.props.day)
         }
         event.preventDefault()
     }
 
     addHarvestCrop(_childCrop, _childDay){
-        console.log("cropSelect addHarvestCrop")
+        console.log("cropSelect addHarvestCrop _childCrop => ", _childCrop)
         this.props.addHarvestCrop(_childCrop, _childDay)
     }
 
@@ -43,6 +46,7 @@ export default class CropSelect extends Component {
         if (event.target.value !== "999"){
             var copyCropSeason = this.props.cropSeason[event.target.value]
             copyCropSeason.isHarvest = false
+            //hasta este punto isHarvest = false OK
             this.setState({
                 selectOption: copyCropSeason
             })

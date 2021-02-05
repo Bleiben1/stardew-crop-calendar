@@ -2,7 +2,7 @@ import React from 'react'
 
 function Main(props) {
 
-    if (props.isHarvest) {
+    if (props.isHarvest === true) {
         return( 
             <tr>
                 <td></td>
