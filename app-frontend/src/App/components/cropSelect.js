@@ -1,33 +1,88 @@
 import React, {Component} from 'react'
 import './cropSelect.css'
+import ShowEntry from './showEntry.js'
 
 export default class CropSelect extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            info: []
+            info: [],
+            selectOption: {}
         }
+        this.changeUserCrop = this.changeUserCrop.bind(this)
+        this.selectOptionChange = this.selectOptionChange.bind(this)
+        this.addHarvestCrop = this.addHarvestCrop.bind(this)
+    }
+
+    changeUserCrop(event){
+        console.log("cropSelect changeUserCrop")
+        if (this.state.selectOption !== null){    
+            var newInfo = this.state.info
+            var copySelectOption = {...this.state.selectOption}
+            console.log("cropSelect changeUserCrop this.state.selecOption => ", this.state.selectOption)
+            newInfo.push(this.state.selectOption)
+            console.log("cropSelect changeUserCrop copySelectOption => ", newInfo)
+            var newObj = {
+                day: this.props.day,
+                data: newInfo
+            }
+            this.setState({
+                info: newInfo
+            })
+            this.props.changeUserCrop(newObj)
+            this.props.addHarvestCrop(copySelectOption, this.props.day)
+        }
+        event.preventDefault()
+    }
+
+    addHarvestCrop(_childCrop, _childDay){
+        console.log("cropSelect addHarvestCrop _childCrop => ", _childCrop)
+        this.props.addHarvestCrop(_childCrop, _childDay)
+    }
+
+    selectOptionChange(event) {
+        console.log("cropSelect selectOptionChange")
+        if (event.target.value !== "999"){
+            var copyCropSeason = this.props.cropSeason[event.target.value]
+            copyCropSeason.isHarvest = false
+            //hasta este punto isHarvest = false OK
+            this.setState({
+                selectOption: copyCropSeason
+            })
+        } else {
+            this.setState({
+                selectOption: null
+            })
+        }
+    }
+
+    componentDidMount() {
+        console.log("cropSelect componentDidMount")
+        this.setState({info: this.props.info})
+    }
+    
+    componentDidUpdate(){
+        console.log("cropSelect componentDidUpdate")
     }
 
     render() {
         return (
             <div>
-                { /*<h3 className="cropSelectDay">Day {this.props.info.day}</h3>*/ }
                 <h3 className="cropSelectDay">Day {this.props.day}</h3>
-                <form>
-                    <label for="cropsAvailable">Crops available</label>
+                <form onSubmit={this.changeUserCrop}>
+                    <label htmlFor="cropsAvailable">Crops available</label>
                     <br></br>
                     { this.props.cropSeason &&
                         this.props.cropSeason.map(c => 
-                            <img src={c.imgURL} alt={c.cropName} className="cropImg"></img>
+                            <img key={c.imgURL+c.cropName} src={c.imgURL} alt={c.cropName} className="cropImg"></img>
                         )
                     }
-                    <select id="cropsAvailable" name="cropsAvailable">
-                        { /*<option value="australia">Australia</option>*/ }
+                    <select id="cropsAvailable" name="cropsAvailable" onChange={this.selectOptionChange}>
+                        { <option value="999">Please select a crop</option> }
                         { this.props.cropSeason &&
-                            this.props.cropSeason.map(c => 
-                                <option value={c.cropName}>{c.cropName}</option>
+                            this.props.cropSeason.map( (c, index) => 
+                                <option value={index}>{c.cropName}</option>
                             )
                         }
                     </select>
@@ -35,24 +90,20 @@ export default class CropSelect extends Component {
                 </form>
                 <hr></hr>
                 <table id="cropSelectTable">
-                    <tr>
-                        <th colSpan="2">Crop</th>
-                        <th>Grow (days)</th>
-                        <th>Regrow (days)</th>
-                    </tr>
-                    { this.props.info &&
-                        this.props.info.data.map(c => 
-                            <tr>
-                                <td><img src={c.image} alt={c.name} className="cropImg"></img></td>
-                                <td>{c.name}</td>
-                                <td>6</td>
-                                <td>0</td>
-                            </tr>
-                        )
-                    }
+                    <tbody>
+                        <tr>
+                            <th colSpan="2">Plant</th>
+                            <th colSpan="2">Harvest</th>
+                        </tr>
+                        { this.state.info &&
+                            this.state.info.map(c => 
+                                <ShowEntry name={c.cropName} image={c.imgURL} isHarvest={c.isHarvest} />
+                            )
+                        }
+                    </tbody>
                 </table>
                 <br></br>
-                <input type="submit" value="Save"></input>
+                <input type="submit" value="Save Changes"></input>
             </div>
         )
     }

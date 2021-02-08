@@ -24,6 +24,7 @@ ul, li, li > p {
 .solid_boder > ul {
     width: 80px;
     height: 80px;
+    overflow: hidden;
 }
 
 table, th, td {

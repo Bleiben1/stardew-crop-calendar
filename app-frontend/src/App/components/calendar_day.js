@@ -13,16 +13,18 @@ export default class CalendarDay extends Component {
     }
 
     changeShowCropSelectFromChild(){
-        this.props.showCropSelect(this.props.day, this.props.info)
+        console.log("calendar_day changeShowCropSelectFromChild")
+        this.props.showCropSelect(this.props.info)
     }
 
     render() {
+        
         return (
             <th className="solid_boder">
                 <ul onClick={this.changeShowCropSelectFromChild}>
-                    <CalendarElement day={this.props.day}/>
+                    <CalendarElement key={this.props.info.day} day={this.props.info.day}/>
                     { this.props.info &&
-                    this.props.info.data.map(c => <CalendarElement name={c.name} image={c.image} />)
+                    this.props.info.data.map((c) => <CalendarElement key={c.cropName} name={c.cropName} image={c.imgURL} isHarvest={c.isHarvest} />)
                     }
                 </ul>
             </th>

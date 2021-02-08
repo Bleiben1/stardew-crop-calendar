@@ -2,3 +2,8 @@
     max-width: 24px;
     max-height: 24px;
 }
+
+.isHarvest {
+    background-color: lawngreen;
+    border-radius: 75%;
+}
