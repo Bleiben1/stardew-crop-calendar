@@ -7,7 +7,6 @@ function Main(props) {
         return( <li><p>{props.day}</p></li>)
     } else {
         return( <img src={props.image} alt={props.name} className={`cropImg ${props.isHarvest ? "isHarvest" : ""}`}></img>)
-        //return( <img src={props.image} alt={props.name} className="cropImg"></img>)
     }
 }
 

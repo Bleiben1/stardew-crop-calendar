@@ -27,6 +27,7 @@ export default class Calendar extends Component {
         this.changeShowCropSelect = this.changeShowCropSelect.bind(this)
         this.changeUserCrop = this.changeUserCrop.bind(this)
         this.addHarvestCrop = this.addHarvestCrop.bind(this)
+        this.deleteHarvestCrop = this.deleteHarvestCrop.bind(this)
     }
 
     _getSeasonsList = async () => {
@@ -89,7 +90,7 @@ export default class Calendar extends Component {
 
     addHarvestCrop(_childCrop, _childDay) {
         console.log("calendar addHarvestCrop _childCrop => ", _childCrop)
-        var harvestDay = {...days[_childCrop.grow + _childDay - 1]}
+        let harvestDay = {...days[_childCrop.grow + _childDay - 1]}
         if( harvestDay.day < 28 ) {
             _childCrop.isHarvest = true
             harvestDay.data.push(_childCrop)
@@ -104,6 +105,27 @@ export default class Calendar extends Component {
         }
     }
 
+    deleteHarvestCrop(_childCrop, _childDay) {
+        console.log("calendar deleteHarvestCrop _childCrop => ", _childCrop)
+        let harvestDay = {...days[_childCrop.grow + _childDay - 1]}
+        if( harvestDay.day < 28 ) {
+            let harvestIndex = -1
+            harvestDay.data.map((c, index) => 
+                {if (c.cropID === _childCrop.cropID & c.isHarvest === true & harvestIndex === -1) {
+                    harvestIndex = index
+                }}
+            )
+            harvestDay.data.splice(harvestIndex,1)
+            this.changeUserCrop(harvestDay)
+            console.log("calendar addHarvestCrop harvestDay => ", harvestDay)
+            if( _childCrop.regrowth > 0  ) {
+                let newChildDay = _childDay
+                newChildDay += _childCrop.regrowth
+                console.log("new child day => ", newChildDay)
+                this.deleteHarvestCrop(_childCrop, newChildDay)
+            }
+        }
+    }
 
     componentDidUpdate() {
         console.log("calendar componentDidUpdate")
@@ -116,7 +138,7 @@ export default class Calendar extends Component {
             <div id="conte">
                 { this.state.show_cropSelect &&
                     <div className="calendar cropSelect">
-                        <CropSelect cropSeason={this.state.cropSeason} day={this.state.current_day} info={this.state.current_dayCrop} changeUserCrop={this.changeUserCrop} addHarvestCrop={this.addHarvestCrop}/>
+                        <CropSelect cropSeason={this.state.cropSeason} day={this.state.current_day} info={this.state.current_dayCrop} changeUserCrop={this.changeUserCrop} addHarvestCrop={this.addHarvestCrop} deleteHarvestCrop={this.deleteHarvestCrop}/>
                     </div>
                 }
                 <div className="calendar">
