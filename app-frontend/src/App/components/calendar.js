@@ -18,7 +18,7 @@ export default class Calendar extends Component {
         this.state = {
             show_cropSelect: false,
             current_season: 0,
-            seasons: [{id: 0, seasonName:"Spring"}],
+            seasons: [{id: 0, seasonName:"Spring", data: {...days}}],
             cropSeason: [],
             current_day:0,
             current_dayCrop: [],
@@ -30,6 +30,34 @@ export default class Calendar extends Component {
         this.deleteHarvestCrop = this.deleteHarvestCrop.bind(this)
     }
 
+    loadDays = () => {
+        console.log("calendar loadDays")
+        if(!localStorage.getItem('stardewCropCalendar-calendarInfo')){
+            console.log("calendar loadDays no previous info stored")
+            const newSeasons = this.state.seasons.map((season) => {
+                return {...season, data: JSON.parse(JSON.stringify(days))}
+            })
+            this.setState({seasons: newSeasons })
+        } else {
+            console.log("calendar loadDays previous info available")
+            const json = localStorage.getItem('stardewCropCalendar-calendarInfo');
+            const savedData = JSON.parse(json);
+            this.setState({seasons: savedData })
+        }
+    }
+
+    saveDays = () => {
+        console.log("calendar saveDays")
+        const json = JSON.stringify(this.state.seasons);
+        localStorage.setItem('stardewCropCalendar-calendarInfo', json);
+    }
+
+    deleteStoredDays = () => {
+        if(localStorage.getItem('stardewCropCalendar-calendarInfo')){
+            localStorage.removeItem('stardewCropCalendar-calendarInfo')
+        }
+    }
+
     _getSeasonsList = async () => {
         console.log("calendar _getSeasonList")
         const response =
@@ -38,7 +66,7 @@ export default class Calendar extends Component {
         )
         this.setState({
             seasons: await response.json()
-        })
+        }, this.loadDays)
     }
 
     _getCropSeason = async () => {
@@ -53,15 +81,27 @@ export default class Calendar extends Component {
     }
 
     componentDidMount() {
-        console.log("calendar componentDidMount")
+        console.log("calendar componentDidMount this.state.seasons => ", this.state.seasons)
         this._getSeasonsList()
-        
+    }
+
+    storeLoadCalendar(next=false) {
+        console.log("calendar storeLoadCalendar")
+        const newCal = this.state.seasons
+        newCal[this.state.current_season] = {...newCal[this.state.current_season], data: JSON.parse(JSON.stringify(days))}
+        this.setState({seasons: newCal })
+        if (next) {
+            days = newCal[this.state.current_season + 1].data
+        } else {
+            days = newCal[this.state.current_season - 1].data
+        }
     }
 
     changeNextSeason = () => {
-        console.log("calendar changeNextSeason")
+        console.log("calendar changeNextSeason this.state.seasons => ", this.state.seasons)
         if (this.state.current_season < this.state.seasons.length - 1) {
             this.setState({current_season: this.state.current_season + 1})
+            this.storeLoadCalendar(true)
         }
     }
 
@@ -69,6 +109,7 @@ export default class Calendar extends Component {
         console.log("calendar changePrevSeason")
         if (this.state.current_season > 0) {
             this.setState({current_season: this.state.current_season - 1})
+            this.storeLoadCalendar()
         }
     }
 
@@ -89,13 +130,12 @@ export default class Calendar extends Component {
     }
 
     addHarvestCrop(_childCrop, _childDay) {
-        console.log("calendar addHarvestCrop _childCrop => ", _childCrop)
+        console.log("calendar addHarvestCrop")
         let harvestDay = {...days[_childCrop.grow + _childDay - 1]}
         if( harvestDay.day < 28 ) {
             _childCrop.isHarvest = true
             harvestDay.data.push(_childCrop)
             this.changeUserCrop(harvestDay)
-            console.log("calendar addHarvestCrop harvestDay => ", harvestDay)
             if( _childCrop.regrowth > 0  ) {
                 let newChildDay = _childDay
                 newChildDay += _childCrop.regrowth
@@ -106,22 +146,23 @@ export default class Calendar extends Component {
     }
 
     deleteHarvestCrop(_childCrop, _childDay) {
-        console.log("calendar deleteHarvestCrop _childCrop => ", _childCrop)
+        console.log("calendar deleteHarvestCrop")
         let harvestDay = {...days[_childCrop.grow + _childDay - 1]}
         if( harvestDay.day < 28 ) {
             let harvestIndex = -1
             harvestDay.data.map((c, index) => 
                 {if (c.cropID === _childCrop.cropID & c.isHarvest === true & harvestIndex === -1) {
                     harvestIndex = index
-                }}
+                }
+                return harvestIndex
+            }
             )
             harvestDay.data.splice(harvestIndex,1)
             this.changeUserCrop(harvestDay)
-            console.log("calendar addHarvestCrop harvestDay => ", harvestDay)
+            console.log("calendar addHarvestCrop")
             if( _childCrop.regrowth > 0  ) {
                 let newChildDay = _childDay
                 newChildDay += _childCrop.regrowth
-                console.log("new child day => ", newChildDay)
                 this.deleteHarvestCrop(_childCrop, newChildDay)
             }
         }
@@ -129,6 +170,7 @@ export default class Calendar extends Component {
 
     componentDidUpdate() {
         console.log("calendar componentDidUpdate")
+        console.log("calendar componentDidUpdate this.state.seasons => ", this.state.seasons)
     }
 
     render(){
@@ -146,10 +188,10 @@ export default class Calendar extends Component {
                         <tbody>
                             <tr>
                                 <th className="noBorder" colSpan="7">
-                                    <img src={arrow_left} alt="prev_season" className="prev_next_button" 
+                                    <img src={arrow_left} alt="prev_season" title="Previous Season" className="prev_next_button"  
                                     onClick={this.changePrevSeason} ></img>
                                     { season }
-                                    <img src={arrow_right} alt="next_season" className="prev_next_button"
+                                    <img src={arrow_right} alt="next_season" title="Next Season" className="prev_next_button"
                                     onClick={this.changeNextSeason} ></img>
                                 </th>
                             </tr>

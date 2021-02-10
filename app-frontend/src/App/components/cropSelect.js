@@ -95,7 +95,7 @@ export default class CropSelect extends Component {
                     <br></br>
                     { this.props.cropSeason &&
                         this.props.cropSeason.map(c => 
-                            <img key={c.imgURL+c.cropName} src={c.imgURL} alt={c.cropName} className="cropImg"></img>
+                            <img key={c.imgURL+c.cropName} src={c.imgURL} alt={""} className="cropImg"></img>
                         )
                     }
                     <select id="cropsAvailable" name="cropsAvailable" onChange={this.selectOptionChange}>
