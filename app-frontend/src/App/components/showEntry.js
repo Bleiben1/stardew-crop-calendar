@@ -36,30 +36,3 @@ export default class ShowEntry extends Component {
     }
 
 }
-
-/*function Main(props) {
-
-    if (props.isHarvest === true) {
-        return( 
-            <tr>
-                <td></td>
-                <td></td>
-                <td>{props.name}</td>
-                <td><img src={props.image} alt={props.name} className="cropImg"></img></td>
-                <td></td>
-            </tr>
-        )
-    } else {
-        return(
-            <tr>
-                <td><img src={props.image} alt={props.name} className="cropImg"></img></td>
-                <td>{props.name}</td>
-                <td></td>
-                <td></td>
-                <td >&#10006;</td>
-            </tr>
-        )
-    }
-}
-
-export default Main; */

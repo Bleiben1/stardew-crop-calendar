@@ -41,3 +41,21 @@ table, th, td {
     border-bottom: black;
     padding: 0px 0px 8px;
 }
+
+.ui_buttons {
+    width: max-content;
+    float: right;
+}
+
+.ui_elem {
+    padding: 0px 6px 0px 6px;
+    margin: 0px 4px 0px 4px;
+}
+
+.ui_elem:hover {
+    cursor: pointer;
+}
+
+.small_btn {
+    max-width: 12px;
+}

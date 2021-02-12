@@ -1,6 +1,9 @@
 import './calendar.css'
 import arrow_left from '../../imgs/arrow_left.png'
 import arrow_right from '../../imgs/arrow_right.png'
+import arrow_up from '../../imgs/arrow_up.png'
+import arrow_down from '../../imgs/arrow_down.png'
+import clearIcon from '../../imgs/clear_icon.png'
 import CalendarDay from './calendar_day.js'
 import CropSelect from './cropSelect.js'
 import React, {Component} from 'react'
@@ -22,7 +25,9 @@ export default class Calendar extends Component {
             cropSeason: [],
             current_day:0,
             current_dayCrop: [],
-            userCrop: []
+            /*userCrop: [],
+            loadedData: false,
+            storedData: false*/
         }
         this.changeShowCropSelect = this.changeShowCropSelect.bind(this)
         this.changeUserCrop = this.changeUserCrop.bind(this)
@@ -42,6 +47,7 @@ export default class Calendar extends Component {
             console.log("calendar loadDays previous info available")
             const json = localStorage.getItem('stardewCropCalendar-calendarInfo');
             const savedData = JSON.parse(json);
+            days = savedData[this.state.current_season].data
             this.setState({seasons: savedData })
         }
     }
@@ -50,12 +56,17 @@ export default class Calendar extends Component {
         console.log("calendar saveDays")
         const json = JSON.stringify(this.state.seasons);
         localStorage.setItem('stardewCropCalendar-calendarInfo', json);
+        //this.setState({savedData: true})
     }
 
-    deleteStoredDays = () => {
-        if(localStorage.getItem('stardewCropCalendar-calendarInfo')){
-            localStorage.removeItem('stardewCropCalendar-calendarInfo')
-        }
+    clearStoredDays = () => {
+        days.map((day, index) => {
+            day = {...day, data: []}
+            console.log("emptyDay => ", day)
+            return this.changeUserCrop(day)
+        })
+        
+        this.setState({savedData: false, loadedData: false})
     }
 
     _getSeasonsList = async () => {
@@ -66,7 +77,7 @@ export default class Calendar extends Component {
         )
         this.setState({
             seasons: await response.json()
-        }, this.loadDays)
+        }, await this.loadDays)
     }
 
     _getCropSeason = async () => {
@@ -169,7 +180,6 @@ export default class Calendar extends Component {
     }
 
     componentDidUpdate() {
-        console.log("calendar componentDidUpdate")
         console.log("calendar componentDidUpdate this.state.seasons => ", this.state.seasons)
     }
 
@@ -193,6 +203,11 @@ export default class Calendar extends Component {
                                     { season }
                                     <img src={arrow_right} alt="next_season" title="Next Season" className="prev_next_button"
                                     onClick={this.changeNextSeason} ></img>
+                                    <div className="ui_buttons">
+                                        <img src={arrow_up} alt="load_saved" title="Load saved calendar" onClick={this.loadDays} className={`ui_elem ${this.state.loadedData ? "isHarvest" : ""}`} ></img>
+                                        <img src={arrow_down} alt="save_info" title="Save Calendar" onClick={this.saveDays} className={`ui_elem ${this.state.savedData ? "isHarvest" : ""}`} ></img>
+                                        <img src={clearIcon} alt="clear" title="Reset Calendar" onClick={this.clearStoredDays} className="ui_elem small_btn" ></img>
+                                    </div>
                                 </th>
                             </tr>
                             <tr>
