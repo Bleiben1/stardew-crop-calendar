@@ -1,0 +1,23 @@
+.downNavegationSection {
+    margin-top: -24px;
+    width: 100%;
+    position: absolute;
+    text-align: center;
+}
+
+.navegationList {
+    display: flex;
+    list-style-type: none;
+    justify-content: center;
+  }
+  
+  .navegationList li a {
+    margin: 0 10px;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+  }
+
+  .navegationContent {
+      display: none;
+  }

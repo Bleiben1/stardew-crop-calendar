@@ -56,6 +56,11 @@ table, th, td {
     cursor: pointer;
 }
 
+.optionDisabled {
+    pointer-events: none;
+    display: none;
+}
+
 .small_btn {
     max-width: 12px;
 }
