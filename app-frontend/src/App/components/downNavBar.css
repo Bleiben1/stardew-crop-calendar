@@ -18,6 +18,10 @@
     color: white;
   }
 
+  .navegationListContent ul li {
+    list-style: inside;
+  }
+
   .navegationContent {
       display: none;
   }

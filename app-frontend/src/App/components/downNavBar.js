@@ -21,16 +21,19 @@ export default function BasicExample() {
           <li>
             <Link to="/me">About Me</Link>
           </li>
+          <li>
+            <Link to="/">Hide</Link>
+          </li>
         </ul>
 
         <Switch>
-          <Route exact path="/how" render={ () => <How />}>
+          <Route exact path="/how">
             <How />
           </Route>
-          <Route path="/about" render={ () => <About />}>
+          <Route path="/about">
             <About />
           </Route>
-          <Route path="/me" render={ () => <Me />}>
+          <Route path="/me">
             <Me />
           </Route>
         </Switch>
@@ -41,8 +44,8 @@ export default function BasicExample() {
 
 function How() {
   return (
-    <div>
-      <h2>Hot to ...</h2>
+    <div className="calendar navegationListContent">
+      <h2>How to ...</h2>
       <h3>...use this tool?</h3>
       <p>This tool is to plan out any sesason by giving you a visual hint on when a crop would be ready to harvest based on the day planted.
       For a basic use please follow the above instructions :</p>
@@ -79,9 +82,9 @@ function How() {
 
 function About() {
   return (
-    <div>
+    <div className="calendar navegationListContent">
       <h2>About the project</h2>
-      <p>This project was build as a way to showcase my ability as a fullstack developer. If by any chance you are interested on hire me as a Junior fullstack Developer, my <a href="https://www.linkedin.com/in/rodrigo-portugal/">Linkedin</a></p>
+      <p>This project was build as a tool to plan out your crops ingame, and as a way to showcase my ability as a fullstack developer. If by any chance you are interested on hire me as a Junior fullstack Developer, my <a href="https://www.linkedin.com/in/rodrigo-portugal/">Linkedin</a></p>
       <h3>Credits:</h3>
       <p></p>
       <ul>
@@ -97,8 +100,16 @@ function About() {
 
 function Me() {
   return (
-    <div>
+    <div className="calendar navegationListContent">
       <h2>About Me</h2>
+      <img alt="my face"></img>
+      <p>Hi, I'm Rodrigo Portugal and I built and maintain this application.
+        To contact me :
+      </p>
+      <ul>
+        <li><b>GitHub:</b><a href="https://github.com/Bleiben1/stardew-crop-calendar"><b>@GitHub</b></a></li>
+        <li><b>Email: </b><a href = "mailto: rodrigoportugaldutra@gmail.com"><b>rodrigoportugaldutra@gmail.com</b></a></li>
+      </ul>
     </div>
   );
 }
