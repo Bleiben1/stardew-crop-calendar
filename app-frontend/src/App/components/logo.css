@@ -1,0 +1,19 @@
+.userLoginSection {
+    margin-top: 8px;
+    width: 100%;
+    position: absolute;
+    text-align: end;
+}
+
+.menu {
+    display: flex;
+    list-style-type: none;
+    justify-content: flex-start;
+  }
+  
+  .menu li {
+    margin: 0 10px;
+    cursor: pointer;
+    text-decoration: underline;
+    color: white;
+  }
