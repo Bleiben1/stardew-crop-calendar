@@ -19,7 +19,7 @@ export default function BasicExample() {
             <Link to="/about">About the project</Link>
           </li>
           <li>
-            <Link to="/me">About Me</Link>
+            <Link to="/me" itemProp="author">About Me</Link>
           </li>
           <li>
             <Link to="/rights">Legal</Link>
@@ -106,17 +106,19 @@ function About() {
 
 function Me() {
   return (
-    <div className="calendar navegationListContent">
-      <h2>About Me</h2>
-      <img alt="my face"></img>
-      <p>Hi, I'm Rodrigo Portugal and I built and maintain this application.
-        To contact me :
-      </p>
-      <ul>
-        <li><b>GitHub:</b><a href="https://github.com/Bleiben1/stardew-crop-calendar"><b>@GitHub</b></a></li>
-        <li><b>Email: </b><a href = "mailto: rodrigoportugaldutra@gmail.com"><b>rodrigoportugaldutra@gmail.com</b></a></li>
-      </ul>
-    </div>
+    <article itemScope itemType="http://schema.org/Author">
+      <div className="calendar navegationListContent">
+        <h2>About Me</h2>
+        <img src="" alt="This is me"></img>
+        <p itemProp="name" id="Rodrigo Portugal">Hi, I'm Rodrigo Portugal and I built and maintain this application.
+          To contact me :
+        </p>
+        <ul>
+          <li><b>GitHub:</b><a href="https://github.com/Bleiben1/stardew-crop-calendar"><b>@GitHub</b></a></li>
+          <li><b>Email: </b><a href = "mailto: rodrigoportugaldutra@gmail.com"><b>rodrigoportugaldutra@gmail.com</b></a></li>
+        </ul>
+      </div>
+    </article>
   );
 }
 
