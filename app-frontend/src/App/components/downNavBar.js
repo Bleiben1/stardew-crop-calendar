@@ -6,6 +6,7 @@ import {
   Link
 } from "react-router-dom";
 import './downNavBar.css'
+import myImg from '../../imgs/indice.png'
 
 export default function BasicExample() {
   return (
@@ -25,7 +26,7 @@ export default function BasicExample() {
             <Link to="/rights">Legal</Link>
           </li>
           <li>
-            <Link to="/">Hide</Link>
+            <Link to="/donate">Donate!</Link>
           </li>
         </ul>
 
@@ -42,6 +43,9 @@ export default function BasicExample() {
           <Route path="/rights">
             <Rights />
           </Route>
+          <Route path="/donate">
+            <Donate />
+          </Route>
         </Switch>
       </div>
     </Router>
@@ -51,6 +55,7 @@ export default function BasicExample() {
 function How() {
   return (
     <div className="calendar navegationListContent">
+      <Link to="/">Hide</Link>
       <h2>How to ...</h2>
       <h3>...use this tool?</h3>
       <p>This tool is to plan out any sesason by giving you a visual hint on when a crop would be ready to harvest based on the day planted.
@@ -79,9 +84,11 @@ function How() {
       <h3>...clear the screen</h3>
       <p>Maybe you would like to start all over again, maybe something don't look right, whatever is the reason you can erase all the crops planted and start with a blank canvas.
         Quick side note here, this does not modify the saved data, unless you save the blank calendar, and this clear is done just to the current season, leaving the other unaffected. </p>
-        <ul>
-          <li>To clear the current sesason's calendar, press the red button at the calendar's top-right corner</li>
-        </ul>
+      <ul>
+        <li>To clear the current sesason's calendar, press the red button at the calendar's top-right corner</li>
+      </ul>
+      <h3>...help this project?</h3>
+      <p>This project does not show ads, you can help me try to keep it that way, if you can <a href="https://paypal.me/RPortugalD" rel="noreferrer" target="_blank">Donate!</a></p>
     </div>
   );
 }
@@ -89,6 +96,7 @@ function How() {
 function About() {
   return (
     <div className="calendar navegationListContent">
+      <Link to="/">Hide</Link>
       <h2>About the project</h2>
       <p>This project was build as a tool to plan out your crops ingame, and as a way to showcase my ability as a fullstack developer. If by any chance you are interested on hire me as a Junior fullstack Developer, my <a href="https://www.linkedin.com/in/rodrigo-portugal/">Linkedin</a></p>
       <h3>Credits:</h3>
@@ -107,9 +115,10 @@ function About() {
 function Me() {
   return (
     <article itemScope itemType="http://schema.org/Author">
+      <Link to="/">Hide</Link>
       <div className="calendar navegationListContent">
         <h2>About Me</h2>
-        <img src="" alt="This is me"></img>
+        <img src={myImg} className="roundImg" alt="This is me"></img>
         <p itemProp="name" id="Rodrigo Portugal">Hi, I'm Rodrigo Portugal and I built and maintain this application.
           To contact me :
         </p>
@@ -125,6 +134,7 @@ function Me() {
 function Rights() {
   return (
     <div className="calendar navegationListContent">
+      <Link to="/">Hide</Link>
       <h2>Terms of Use</h2>
       <p>Last update time : February 17, 2021
       </p>
@@ -217,5 +227,17 @@ function Rights() {
       </p>
       <p>THE FOREGOING DOES NOT AFFECT ANY LIABILITY THAT CANNOT BE EXCLUDED OR LIMITED UNDER APPLICABLE LAW.</p>
     </div>
-  );
+  )
+}
+
+function Donate() {
+  return (
+    <div className="calendar navegationListContent">
+      <p>This project does not show ads, you can help me try to keep it that way</p>
+      <a href="https://paypal.me/RPortugalD" rel="noreferrer" target="_blank">
+        <img src="https://www.paypalobjects.com/webstatic/paypalme/images/pp_logo_small.png" alt="Paypal logo" />
+      </a>
+      <Link to="/">Hide</Link>
+    </div>
+  )
 }

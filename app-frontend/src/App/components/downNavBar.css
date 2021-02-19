@@ -6,22 +6,26 @@
 }
 
 .navegationList {
-    display: flex;
-    list-style-type: none;
-    justify-content: center;
-  }
+  display: flex;
+  list-style-type: none;
+  justify-content: center;
+}
   
-  .navegationList li a {
-    margin: 0 10px;
-    cursor: pointer;
-    text-decoration: none;
-    color: white;
-  }
+.navegationList li a {
+  margin: 0 10px;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+}
 
-  .navegationListContent ul li {
-    list-style: inside;
-  }
+.navegationListContent ul li {
+  list-style: inside;
+}
 
-  .navegationContent {
-      display: none;
-  }
+.navegationContent {
+  display: none;
+}
+
+.roundImg {
+  border-radius: 50%;
+}
