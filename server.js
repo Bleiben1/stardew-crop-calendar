@@ -1,5 +1,5 @@
 const routes = require("./routes")
-
+const path = require("path")
 const express = require('express')
 const passport = require('passport')
 const session = require('express-session')
@@ -9,7 +9,11 @@ const db = require('./db')
 const cors = require('cors')
 
 const app = express()
-const port = 3001
+const port = process.env.PORT || 3001
+
+if(process.env.NODE_ENV ==="production") {
+    app.use(express.static(path.join(__dirname, "app-frontend/build")))
+}
 
 app.use(express.json())
 
@@ -94,7 +98,7 @@ app.get('/logout', function(req, res){
 app.use('/', routes)
 
 app.listen(port, () => {
-    console.log("Listeneing on port " + port)
+    console.log("Listening on port " + port)
 })
 
 function ensureAuthenticated(req, res, next) {
