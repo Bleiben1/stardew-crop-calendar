@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "node" : "12.18.3",
-    "npm" : "6.14.2"
+    "node": "12.18.3",
+    "npm": "6.14.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -23,7 +23,8 @@
     "express-session": "^1.17.1",
     "knex": "^0.21.15",
     "passport": "^0.4.1",
-    "passport-steam": "^1.0.15"
+    "passport-steam": "^1.0.15",
+    "pg": "^8.5.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
