@@ -8,15 +8,14 @@ const devConfig = {
     port: process.env.PG_PORT
 }
 
+const prodConfig = {
+    connectionString : process.env.DATABASE_URL
+}
+
 const knex = require('knex')({
     client: 'pg',
     version: '7.2',
-    connection: {
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME
-    }
+    connection: (process.env.NODE_ENV === "production" ? prodConfig : devConfig)
 })
 
 module.exports = knex
